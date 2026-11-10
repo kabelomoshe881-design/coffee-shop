@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Environment - NEVER commit real credentials
+.env
+.env.local
+.env.*.local
+*.env
+!.env.example
+
+# Build output
+dist/
+build/
+.vite/
+coverage/
+
+# Local dev database fallback
+server/data/*.json
+
+# Logs
+*.log
+npm-debug.log*
+logs/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Misc
+*.pem
+.cache/

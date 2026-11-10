@@ -1,0 +1,116 @@
+/* ---------------------------------------------------------------------------
+   Ground & Grain — design tokens
+   Generated from the ui-ux-pro-max design system, then tuned:
+   - Playfair Display (not the SC cut) for display type: small caps fight
+     long headings and price rows.
+   - Cream paper background instead of the full #FEF3C7 so cards can sit on
+     top without vibrating.
+   Every colour below is a semantic role, never a raw hex in a component.
+--------------------------------------------------------------------------- */
+
+:root {
+  color-scheme: light;
+
+  --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-body: 'Karla', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, 'SFMono-Regular', 'Cascadia Code', Menlo, monospace;
+
+  /* Raw brand ramp */
+  --brown-900: #4a2508;
+  --brown-800: #6b3410;
+  --brown-700: #7c3a0e;
+  --brown-600: #92400e;
+  --brown-500: #b45309;
+  --terracotta: #c2410c;
+  --cream-50: #fdfaf3;
+  --cream-100: #fbf6ec;
+  --cream-200: #f6eddd;
+
+  /* Semantic surface + text */
+  --bg: var(--cream-100);
+  --bg-elevated: #ffffff;
+  --surface: #ffffff;
+  --surface-2: var(--cream-200);
+  --ink: #2a1b12;
+  --ink-soft: #4a3628;
+  --ink-muted: #6b5546;
+  --border: #e6d8c3;
+  --border-strong: #d6c2a6;
+
+  /* Actions */
+  --primary: var(--brown-600);
+  --primary-hover: var(--brown-700);
+  --on-primary: #ffffff;
+  --accent: var(--terracotta);
+  --on-accent: #ffffff;
+  --ring: #b45309;
+
+  /* Status */
+  --success: #15803d;
+  --success-bg: #dcfce7;
+  --success-ink: #14532d;
+  --warning: #b45309;
+  --warning-bg: #fef3c7;
+  --warning-ink: #78350f;
+  --info: #1d4ed8;
+  --info-bg: #dbeafe;
+  --info-ink: #1e3a8a;
+  --danger: #b91c1c;
+  --danger-bg: #fee2e2;
+  --danger-ink: #7f1d1d;
+
+  /* Shape + depth */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 26px;
+  --radius-full: 999px;
+
+  --shadow-sm: 0 1px 2px rgba(42, 27, 18, 0.06), 0 1px 3px rgba(42, 27, 18, 0.04);
+  --shadow-md: 0 4px 12px -2px rgba(42, 27, 18, 0.1), 0 2px 6px -2px rgba(42, 27, 18, 0.06);
+  --shadow-lg: 0 18px 40px -12px rgba(42, 27, 18, 0.22);
+
+  /* Motion */
+  --ease: cubic-bezier(0.2, 0.7, 0.3, 1);
+  --dur-fast: 150ms;
+  --dur: 220ms;
+  --dur-slow: 380ms;
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  --bg: #14100c;
+  --bg-elevated: #1b1511;
+  --surface: #1e1712;
+  --surface-2: #261d16;
+  --ink: #f6ede2;
+  --ink-soft: #dccbba;
+  --ink-muted: #b09c8a;
+  --border: #33271e;
+  --border-strong: #453428;
+
+  --primary: #e8a96b;
+  --primary-hover: #f0bc86;
+  --on-primary: #22150b;
+  --accent: #f0a36a;
+  --on-accent: #22150b;
+  --ring: #e8a96b;
+
+  --success: #4ade80;
+  --success-bg: #0f2a1a;
+  --success-ink: #86efac;
+  --warning: #f0b27a;
+  --warning-bg: #2a1e10;
+  --warning-ink: #fcd9b0;
+  --info: #93b4ff;
+  --info-bg: #101b33;
+  --info-ink: #c7d8ff;
+  --danger: #f87171;
+  --danger-bg: #2a1212;
+  --danger-ink: #fca5a5;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 6px 18px -6px rgba(0, 0, 0, 0.55);
+  --shadow-lg: 0 24px 50px -16px rgba(0, 0, 0, 0.7);
+}
