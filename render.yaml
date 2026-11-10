@@ -1,0 +1,35 @@
+# Render blueprint — deploys the API only.
+# The React client goes to Vercel or Netlify (see DEPLOY.md).
+#
+# Usage: push this repo to GitHub, then in Render choose
+#   New → Blueprint → pick the repo. Render reads this file.
+services:
+  - type: web
+    name: ground-and-grain-api
+    runtime: node
+    plan: free
+    region: frankfurt
+    rootDir: server
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # Redis (Upstash, or Render Key Value). Paste the rediss:// URL.
+      - key: REDIS_URL
+        sync: false
+      # The deployed client origin, e.g. https://ground-and-grain.vercel.app
+      # Comma-separate to also allow preview URLs.
+      - key: FRONTEND_URL
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 8h
+      - key: STAFF_USERNAME
+        value: staff
+      # bcrypt hash from: npm run hash -- "your-password"
+      - key: STAFF_PASSWORD_HASH
+        sync: false

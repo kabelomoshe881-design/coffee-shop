@@ -45,6 +45,9 @@ Customers browse the menu, build a cart and place an order. Staff sign in to man
 
 > Replace the three rows above before submitting.
 
+Step-by-step instructions, including the CORS step that trips most people up, are in
+[`DEPLOY.md`](./DEPLOY.md).
+
 ---
 
 ## Features
@@ -304,6 +307,8 @@ Covers the health check, public menu reads, auth rejection, validation errors, s
 
 ## Deployment
 
+Full walkthrough: [`DEPLOY.md`](./DEPLOY.md). The short version:
+
 ### 1. Database — Upstash (free, persistent)
 
 1. Create a Redis database at <https://upstash.com>.
@@ -312,7 +317,7 @@ Covers the health check, public menu reads, auth rejection, validation errors, s
 ### 2. API — Render
 
 1. New **Web Service**, root directory `server`.
-2. Build: `npm install` · Start: `npm start`.
+2. Build: `npm ci` · Start: `npm start`.
 3. Environment:
 
 ```
@@ -325,6 +330,11 @@ STAFF_PASSWORD_HASH=<from npm run hash>
 ```
 
 4. Verify `https://your-api.onrender.com/api/health` returns `200` with `"store":{"driver":"redis","ok":true}`.
+
+A `render.yaml` blueprint at the repo root sets all of this up in one step.
+
+The menu seeds itself the first time the API boots against an empty database, so a fresh deploy
+is usable immediately. Set `AUTO_SEED=false` to skip that.
 
 > Free Render services sleep after inactivity. Open the health URL a minute before your demo to warm it up.
 

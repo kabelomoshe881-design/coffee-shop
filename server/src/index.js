@@ -1,6 +1,8 @@
 import { config, warnAboutInsecureDefaults } from './config.js';
 import { createRedisStore } from './store/redis.js';
 import { createFileStore } from './store/file.js';
+import { createMenuRepository } from './repositories/menu.js';
+import { MENU_ITEMS } from './data/menu-seed.js';
 import { createApp } from './app.js';
 
 const store =
@@ -9,6 +11,27 @@ const store =
     : await createFileStore(config.dataFile);
 
 warnAboutInsecureDefaults();
+
+/**
+ * A fresh deployment starts with an empty database. Rather than making the
+ * first visitor see an empty menu, load the starting menu once. Safe to leave
+ * on: it only writes when the menu is completely empty.
+ */
+async function seedIfEmpty() {
+  if (!config.autoSeed) return;
+  try {
+    const menu = createMenuRepository(store);
+    const existing = await menu.list();
+    if (existing.length > 0) return;
+    for (const item of MENU_ITEMS) await menu.create(item);
+    console.log(`[seed] menu was empty - loaded ${MENU_ITEMS.length} starting items`);
+  } catch (err) {
+    // Never stop the API from booting because seeding failed.
+    console.warn(`[seed] skipped: ${err.message}`);
+  }
+}
+
+await seedIfEmpty();
 
 const app = createApp({ store, config });
 

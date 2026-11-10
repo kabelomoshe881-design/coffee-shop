@@ -31,6 +31,10 @@ export const config = {
   storeDriver: process.env.STORE_DRIVER || (redisUrl ? 'redis' : 'file'),
   redisUrl,
   dataFile: process.env.DATA_FILE || path.join(serverRoot, 'data', 'db.json'),
+
+  // Loads the starting menu when the database is empty, so a fresh deploy
+  // is usable immediately. Set AUTO_SEED=false to disable.
+  autoSeed: process.env.AUTO_SEED !== 'false',
 };
 
 export function warnAboutInsecureDefaults() {
