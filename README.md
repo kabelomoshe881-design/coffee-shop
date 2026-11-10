@@ -39,11 +39,11 @@ Customers browse the menu, build a cart and place an order. Staff sign in to man
 
 | Service | URL | Notes |
 | --- | --- | --- |
-| Frontend | _add your Vercel / Netlify URL_ | Built with `VITE_API_URL` pointing at the API |
-| API | _add your Render URL_ | Verify `GET /api/health` returns `200` |
-| Database | _add your Upstash / Render Key Value instance_ | `REDIS_URL` set on Render only |
+| Frontend | <https://coffee-shop-omega-lovat.vercel.app> | React SPA on Vercel |
+| API | <https://ground-and-grain-api.onrender.com> | `GET /api/health` → `200`, driver `redis` |
+| Database | Upstash Redis (`intense-muskrat-98198.upstash.io`) | `REDIS_URL` set on Render only |
 
-> Replace the three rows above before submitting.
+> Free Render instances sleep after inactivity, so the first request may take up to a minute.
 
 Step-by-step instructions, including the CORS step that trips most people up, are in
 [`DEPLOY.md`](./DEPLOY.md).
