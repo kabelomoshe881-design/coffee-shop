@@ -109,23 +109,52 @@ export function ErrorBanner({ message, onRetry }) {
 
 export function Modal({ open, onClose, title, description, children, footer }) {
   const dialogRef = useRef(null);
+  // Keep the latest callback without making it an effect dependency: an inline
+  // arrow from the parent would otherwise re-run this effect on every keystroke,
+  // which steals focus from the field the user is typing in.
+  const closeRef = useRef(onClose);
+  closeRef.current = onClose;
 
   useEffect(() => {
     if (!open) return undefined;
 
     const previousFocus = document.activeElement;
+    const focusables = () =>
+      [
+        ...(dialogRef.current?.querySelectorAll(
+          'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        ) || []),
+      ].filter((el) => el.getClientRects().length > 0);
+
     const onKeyDown = (event) => {
-      if (event.key === 'Escape') onClose();
+      if (event.key === 'Escape') {
+        closeRef.current();
+        return;
+      }
+      if (event.key !== 'Tab') return;
+
+      const items = focusables();
+      if (!items.length) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
 
     document.addEventListener('keydown', onKeyDown);
     document.body.style.overflow = 'hidden';
 
     const frame = requestAnimationFrame(() => {
-      const target = dialogRef.current?.querySelector(
-        'input, textarea, select, button, [href], [tabindex]:not([tabindex="-1"])'
+      // Focus the first form field, not the header close button.
+      const field = dialogRef.current?.querySelector(
+        'input:not([type="hidden"]):not([disabled]), textarea:not([disabled]), select:not([disabled])'
       );
-      (target || dialogRef.current)?.focus();
+      (field || dialogRef.current)?.focus();
     });
 
     return () => {
@@ -134,7 +163,7 @@ export function Modal({ open, onClose, title, description, children, footer }) {
       document.body.style.overflow = '';
       if (previousFocus instanceof HTMLElement) previousFocus.focus();
     };
-  }, [open, onClose]);
+  }, [open]);
 
   if (!open) return null;
 

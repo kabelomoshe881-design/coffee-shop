@@ -16,6 +16,8 @@ export default function CartDrawer({ open, onClose }) {
   const [submitting, setSubmitting] = useState(false);
   const panelRef = useRef(null);
   const nameRef = useRef(null);
+  const closeRef = useRef(onClose);
+  closeRef.current = onClose;
   const navigate = useNavigate();
   const { push } = useToast();
 
@@ -24,7 +26,7 @@ export default function CartDrawer({ open, onClose }) {
 
     const previousFocus = document.activeElement;
     const onKeyDown = (event) => {
-      if (event.key === 'Escape') onClose();
+      if (event.key === 'Escape') closeRef.current();
     };
 
     document.addEventListener('keydown', onKeyDown);
@@ -35,7 +37,7 @@ export default function CartDrawer({ open, onClose }) {
       document.body.style.overflow = '';
       if (previousFocus instanceof HTMLElement) previousFocus.focus();
     };
-  }, [open, onClose]);
+  }, [open]);
 
   if (!open) return null;
 
