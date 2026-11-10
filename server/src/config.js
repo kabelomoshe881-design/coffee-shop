@@ -41,7 +41,9 @@ export function warnAboutInsecureDefaults() {
   const warnings = [];
   if (!config.staffPasswordHash) {
     warnings.push(
-      'STAFF_PASSWORD_HASH is not set - using the demo password "coffee123". Set it before deploying.'
+      config.isProduction
+        ? 'STAFF_PASSWORD_HASH is not set - staff login is disabled. Generate one with: npm run hash -- "your-password"'
+        : 'STAFF_PASSWORD_HASH is not set - using the development-only demo password.'
     );
   }
   if (config.isProduction && config.jwtSecret === 'dev-only-insecure-secret-change-me') {

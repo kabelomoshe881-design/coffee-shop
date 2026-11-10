@@ -260,7 +260,7 @@ This is enforced in the repository, not the UI. Calling the API directly cannot 
 ### `POST /api/auth/login`
 
 ```json
-{ "username": "staff", "password": "coffee123" }
+{ "username": "staff", "password": "<your-staff-password>" }
 ```
 
 ```json
@@ -292,7 +292,7 @@ curl http://localhost:4000/api/menu
 # Log in and keep the token
 TOKEN=$(curl -s -X POST http://localhost:4000/api/auth/login \
   -H 'Content-Type: application/json' \
-  -d '{"username":"staff","password":"coffee123"}' | jq -r .data.token)
+  -d '{"username":"staff","password":"<your-staff-password>"}' | jq -r .data.token)
 
 # Place an order
 curl -X POST http://localhost:4000/api/orders \

@@ -92,11 +92,6 @@ export default function StaffLogin() {
           <Button type="submit" size="lg" loading={busy} className="login__submit">
             Sign in <ArrowRightIcon size={18} />
           </Button>
-
-          <p className="login__hint">
-            <strong>Demo credentials:</strong> staff / coffee123
-            <span>Change these with STAFF_PASSWORD_HASH before deploying.</span>
-          </p>
         </form>
       </main>
     </div>

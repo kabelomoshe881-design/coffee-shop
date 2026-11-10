@@ -12,7 +12,9 @@ export function verifyStaffCredentials(username, password) {
     return bcrypt.compareSync(password, config.staffPasswordHash);
   }
 
-  // Demo fallback so the project runs with zero configuration.
+  // Development convenience only. In production an unset hash fails closed,
+  // so a misconfigured deploy can never be opened with a known password.
+  if (config.isProduction) return false;
   return password === DEMO_PASSWORD;
 }
 

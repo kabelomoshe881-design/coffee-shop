@@ -159,19 +159,24 @@ npm run dev               # http://127.0.0.1:5180
 
 ### 3. Sign in as staff
 
-Open <http://127.0.0.1:5180/staff> and use:
-
-| Username | Password |
-| --- | --- |
-| `staff` | `coffee123` |
-
-That demo password only exists while `STAFF_PASSWORD_HASH` is empty. Set a real one:
+Staff login requires a password hash — there is no shared default password.
 
 ```bash
 cd server
-npm run hash -- "your-new-password"
-# paste the output into .env as STAFF_PASSWORD_HASH=...
+npm run hash -- "your-password"
 ```
+
+Paste the output into `server/.env` as a single line:
+
+```
+STAFF_PASSWORD_HASH=$2a$10$...
+```
+
+Restart the API, open <http://127.0.0.1:5180/staff>, and sign in as `staff` with the
+password you chose. Change the username with `STAFF_USERNAME` if you prefer.
+
+> The API fails closed: if `STAFF_PASSWORD_HASH` is unset in production, staff login is
+> disabled rather than falling back to a known password.
 
 > If port 5173 is taken on your machine, the client is configured for **5180**. Change `server.port` in `client/vite.config.js` and `FRONTEND_URL` in `server/.env` together.
 

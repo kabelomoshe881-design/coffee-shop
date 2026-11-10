@@ -99,8 +99,9 @@ npm run hash -- "YourStrongPassword"
 
 It prints a `$2b$10$...` string. On Windows PowerShell, wrap the password in double quotes.
 
-> If you leave `STAFF_PASSWORD_HASH` empty, the demo password `coffee123` works. Change it —
-> the app logs a warning about this on every boot.
+> `STAFF_PASSWORD_HASH` is **required** in production. Without it staff login is disabled —
+> the API fails closed rather than falling back to a known password. Locally, an unset hash
+> enables a development-only default that never applies when `NODE_ENV=production`.
 
 ### Generating `JWT_SECRET`
 
