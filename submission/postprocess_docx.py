@@ -6,11 +6,12 @@ Post-process the Word-saved report:
 """
 import re
 import shutil
+import sys
 import zipfile
 import os
 
-PATH = r"C:\Users\HP\projects\coffee-shop\submission\BIWA2110-Ground-and-Grain-Report.docx"
-PAGES = 34
+PATH = sys.argv[1] if len(sys.argv) > 1 else r"C:\Users\HP\projects\coffee-shop\submission\BIWA2110-Ground-and-Grain-Report.docx"
+PAGES = int(sys.argv[2]) if len(sys.argv) > 2 else 34
 TMP = PATH + ".tmp"
 
 with zipfile.ZipFile(PATH, "r") as zin:

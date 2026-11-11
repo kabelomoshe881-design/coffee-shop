@@ -18,7 +18,7 @@ from docx.oxml import OxmlElement
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SHOTS = os.path.join(HERE, "screenshots")
-OUT = os.path.join(HERE, "BIWA2110-Ground-and-Grain-Report.docx")
+OUT = os.environ.get("REPORT_OUT") or os.path.join(HERE, "BIWA2110-Ground-and-Grain-Report.docx")
 
 # Optional first argument: the real page count from a previous build. Word's
 # NUMPAGES field is unreliable when fields are updated without an interactive
@@ -258,10 +258,13 @@ def rich(parts, size=10.5, align="justify", space_after=6, indent=0):
 
 
 def h1(text, new_page=True):
-    if new_page and not FIRST_H1[0]:
-        doc.add_page_break()
-    FIRST_H1[0] = False
     par = doc.add_heading(text, level=1)
+    if new_page and not FIRST_H1[0]:
+        # page_break_before rather than an explicit break: an explicit break
+        # adds an empty paragraph, which produces a blank page when the
+        # previous page already ended at the bottom.
+        par.paragraph_format.page_break_before = True
+    FIRST_H1[0] = False
     par.paragraph_format.space_before = Pt(0)
     par.paragraph_format.space_after = Pt(10)
     par.paragraph_format.keep_with_next = True
@@ -270,8 +273,8 @@ def h1(text, new_page=True):
 
 def h1_plain(text):
     """Section title that looks like a chapter heading but stays out of the TOC."""
-    doc.add_page_break()
     par = doc.add_paragraph()
+    par.paragraph_format.page_break_before = True
     par.paragraph_format.space_before = Pt(0)
     par.paragraph_format.space_after = Pt(10)
     par.paragraph_format.keep_with_next = True
@@ -617,7 +620,7 @@ for i, text in enumerate(("Name and surname", "Student number", "Contribution ar
     run = par.add_run(text)
     _set_run_font(run, BODY_FONT, 8.4, bold=True)
 
-for area in ("Backend API and data model", "Customer experience", "Staff dashboard and auth", "Design, docs and deployment"):
+for area in ("Backend API and data model", "Customer experience", "Staff dashboard and auth", "Design system and styling", "Documentation and deployment"):
     cells = members.add_row().cells
     for i, text in enumerate(("[ full name ]", "[ student number ]", area)):
         cells[i].text = ""
@@ -671,7 +674,7 @@ for i, text in enumerate(("Name and surname", "Student number", "Signature")):
     run = par.add_run(text)
     _set_run_font(run, BODY_FONT, 8.6, bold=True)
 
-for _ in range(4):
+for _ in range(5):
     cells = sign.add_row().cells
     for i in range(3):
         cells[i].text = ""
@@ -834,8 +837,9 @@ table(
     ["Member", "Student number", "Primary responsibility", "Also responsible for"],
     [
         ["[ full name ]", "[ student number ]", "Backend API, data model, automated tests", "Deployment"],
-        ["[ full name ]", "[ student number ]", "Customer experience: menu, cart, confirmation", "Design system"],
-        ["[ full name ]", "[ student number ]", "Staff dashboard, authentication, menu management", "Testing"],
+        ["[ full name ]", "[ student number ]", "Customer experience: menu, cart, confirmation", "Testing"],
+        ["[ full name ]", "[ student number ]", "Staff dashboard, authentication, menu management", "Code review"],
+        ["[ full name ]", "[ student number ]", "Design system, theming, responsive layout", "Accessibility"],
         ["[ full name ]", "[ student number ]", "Documentation, integration, deployment", "Code review"],
     ],
     widths=[4.2, 3.2, 6.0, 3.2],
@@ -1553,9 +1557,34 @@ table(
         ["Production bundle inspection", "No demo hint, no password, no hash"],
         ["Console during the full flow", "Zero errors"],
         ["Persistence across requests", "Order counter incremented and survived later requests"],
+        ["Records read back from the live instance", "33 keys, 16 menu documents, 7 orders, counter at 7, daily revenue R520.00"],
     ],
     widths=[7.6, 8.8],
     caption_text="Live verification results",
+    size=8.4,
+)
+
+h2("6.7 Reading the records back")
+p(
+    "A deployed app that returns the right JSON is not proof that anything was stored. Before we "
+    "called the project finished we wrote a small read-only script, submission/capture_db_evidence.mjs, "
+    "which opens the same rediss:// connection the API uses and walks the keyspace with SCAN instead of "
+    "KEYS *. It reads only: no writes, no deletes, no expiry changes. The output is saved as "
+    "submission/evidence/database-records.txt and is reproduced in Figure 13."
+)
+table(
+    ["What we asked", "What came back"],
+    [
+        ["DBSIZE", "33 keys, 0 with an expiry"],
+        ["menu:item:*", "16 JSON documents, matching the 16 cards on the menu"],
+        ["menu:index and category sets", "16 members in the index, 7 coffee, 3 tea, 4 pastry, 2 other"],
+        ["orders:index", "7 orders, scored by creation time, ORD-0001 to ORD-0007"],
+        ["counter:order", "7, so the next order becomes ORD-0008"],
+        ["stats:day:2026-11-10", "orderCount 7, revenueCents 52000, which equals the sum of the seven order totals"],
+        ["orders:status:collected", "7, and the other three status sets empty"],
+    ],
+    widths=[5.2, 11.2],
+    caption_text="Live records read back from Upstash",
     size=8.4,
 )
 
@@ -1820,18 +1849,18 @@ h3("Order document")
 code(
     """
 {
-  "id": "a4366e9c-b0be-47e9-899c-ef86a0d8f125",
+  "id": "af86c681-5efe-43db-b493-9d39f695cb49",
   "orderNumber": "ORD-0007",
-  "customerName": "Thabo",
-  "note": "Oat milk, no sugar",
-  "status": "pending",
+  "customerName": "leluma",
+  "note": "no sugar",
   "items": [
-    { "itemId": "290f804a-…", "name": "Americano",
-      "priceCents": 2200, "qty": 2 }
+    { "itemId": "b4804488-…", "name": "Rooibos Tea",
+      "priceCents": 2000, "qty": 1, "lineTotalCents": 2000 }
   ],
-  "totalCents": 4400,
-  "createdAt": "2026-11-10T13:48:00.000Z",
-  "updatedAt": "2026-11-10T13:48:00.000Z"
+  "totalCents": 12600,
+  "status": "collected",
+  "createdAt": "2026-11-10T14:12:12.877Z",
+  "updatedAt": "2026-11-10T14:13:19.614Z"
 }
 """,
     size=8.0,
@@ -1922,7 +1951,8 @@ table(
         ["[ full name ]", "[ student number ]", "Backend API and data model", "server/src/**, server/test/**"],
         ["[ full name ]", "[ student number ]", "Customer experience", "MenuPage, MenuCard, CartDrawer, ConfirmPage, CartContext"],
         ["[ full name ]", "[ student number ]", "Staff dashboard and auth", "StaffLogin, StaffDashboard, AuthContext, ui.jsx"],
-        ["[ full name ]", "[ student number ]", "Design, documentation, deployment", "design-system/**, styles/**, README.md, docs/**"],
+        ["[ full name ]", "[ student number ]", "Design system and styling", "design-system/**, styles/tokens.css, styles/app.css"],
+        ["[ full name ]", "[ student number ]", "Documentation and deployment", "README.md, docs/**, vercel.json, render.yaml"],
     ],
     widths=[3.4, 3.2, 5.0, 4.8],
     caption_text="Ownership map",
@@ -1955,9 +1985,12 @@ callout("Complete this before you submit", [
 
 h1("Appendix E — Screenshot index")
 p(
-    "All screenshots were captured from the deployed application at "
-    "coffee-shop-omega-lovat.vercel.app on 10 November 2026, not from a local build. The files are "
-    "in submission/screenshots/.",
+    "Screenshots 01 to 12 were captured from the deployed application at "
+    "coffee-shop-omega-lovat.vercel.app on 10 November 2026, not from a local build. Screenshot 13 "
+    "is the database rather than the interface: it is the live key-value store read back from Upstash "
+    "on 11 November 2026 by the read-only script described in section 6.7, rendered for print. The raw "
+    "text of that export is submission/evidence/database-records.txt. All files are in "
+    "submission/screenshots/.",
     size=9,
     color=MUTED,
 )
@@ -1976,12 +2009,18 @@ table(
         ["10-menu-dark.png", "Dark theme"],
         ["11-mobile-menu.png", "Menu at 390 × 844"],
         ["12-mobile-cart.png", "Cart sheet at 390 × 844"],
+        ["13-database-records.png", "Live key-value store: keyspace, indexes and one stored order"],
     ],
     widths=[6.0, 10.4],
     caption_text="Screenshot index",
     size=8.4,
 )
 
+figure(
+    "13-database-records.png",
+    "Records read back from the live Upstash key-value store on 11 November 2026.",
+    width_cm=16.2,
+)
 figure("04-confirmation.png", "Confirmation with a shareable URL and live status.")
 figure("07-dashboard-orders.png", "Orders table with one-click status advancement.")
 figure("10-menu-dark.png", "Dark theme driven by the same tokens.")

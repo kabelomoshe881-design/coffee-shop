@@ -16,9 +16,10 @@ record you submit alongside the repo.
 | Member | Student number | Primary ownership | Secondary |
 | --- | --- | --- | --- |
 | _Name 1_ | _00000000_ | Backend API + data model | Deployment |
-| _Name 2_ | _00000000_ | Frontend customer experience | Design system |
-| _Name 3_ | _00000000_ | Staff dashboard | Testing |
-| _Name 4_ | _00000000_ | Documentation + integration | Code review |
+| _Name 2_ | _00000000_ | Frontend customer experience | Testing |
+| _Name 3_ | _00000000_ | Staff dashboard | Code review |
+| _Name 4_ | _00000000_ | Design system + styling | Accessibility |
+| _Name 5_ | _00000000_ | Documentation + integration | Code review |
 
 Adjust to your actual group size. With three members, fold documentation into whoever has the
 lightest load; do not leave it unowned.

@@ -1,0 +1,99 @@
+GROUND & GRAIN - LIVE KEY-VALUE DATABASE EXPORT
+===============================================
+
+Captured  : 2026-11-11T14:32:53.356Z
+Instance  : rediss://***@intense-muskrat-98198.upstash.io:6379
+Client    : ioredis 5.x, TLS, read-only session (SCAN / TYPE / GET / SMEMBERS / ZRANGE)
+DBSIZE    : 33
+# Keyspace
+db0:keys=33,expires=0,avg_ttl=0
+
+KEYS BY PREFIX
+  counter        1
+  menu          21
+  order          7
+  orders         3
+  stats          1
+  TOTAL         33
+
+KEYSPACE
+  string counter:order                                       len=1
+  set    menu:category:coffee                                members=7
+  set    menu:category:other                                 members=2
+  set    menu:category:pastry                                members=4
+  set    menu:category:tea                                   members=3
+  set    menu:index                                          members=16
+  string menu:item:16700d09-91b1-4dd2-b5ef-da3093109d41      len=247
+  string menu:item:290f804a-02a3-4d04-ac03-e9c9e8915402      len=256
+  string menu:item:2ca54f18-c419-4de5-9833-f54977e62600      len=258
+  string menu:item:35e5ce22-df56-4af1-9a93-8e81de20017d      len=261
+  string menu:item:5934110c-3af4-4461-8b60-cec44b13f0bb      len=251
+  string menu:item:6aad3f34-1c31-486d-a03d-483b963ea3a4      len=249
+  string menu:item:96bcca1d-7420-41cb-a3d9-aa203c726951      len=256
+  string menu:item:98951fa8-8632-4df4-a1ff-7cec35571de6      len=253
+  string menu:item:9e0a8490-6834-4c71-924b-bc5c57a5f989      len=252
+  string menu:item:b1c56f23-3f31-4df9-95c7-c76a6765264b      len=268
+  string menu:item:b4804488-be84-4af9-87a3-999f275dcf5c      len=249
+  string menu:item:c6dec633-edd2-422f-986f-f8eb0b864bd2      len=254
+  string menu:item:ca753e60-26c2-4742-8338-e2fadbdba4d1      len=249
+  string menu:item:e47b807c-eda8-4eed-998a-a3ed9480eb7c      len=260
+  string menu:item:f9da18b2-c52e-4adc-9367-429c5c6afef0      len=252
+  string menu:item:fb5cd2c5-3073-4d77-b431-e7c09f1b268d      len=260
+  string order:0e1f2c18-6b94-4fb6-b043-0866725fc929          len=603
+  string order:6c6a1d8c-739d-46d2-ab3d-3a17ee54ec22          len=406
+  string order:855d36b1-0b5f-47c5-ac2e-8d4825adf809          len=363
+  string order:a4366e9c-b0be-47e9-899c-ef86a0d8f125          len=480
+  string order:af86c681-5efe-43db-b493-9d39f695cb49          len=724
+  string order:b9e72d97-a714-42e3-9604-60f346ec002d          len=357
+  string order:fac69e40-0ee8-4ebd-8a53-c57346b7e5e8          len=507
+  set    orders:day:2026-11-10                               members=7
+  zset   orders:index                                        members=7
+  set    orders:status:collected                             members=7
+  hash   stats:day:2026-11-10                                fields=2
+
+MENU DOCUMENTS
+--------------
+menu:index -> 16 ids
+
+menu:item:16700d09-91b1-4dd2-b5ef-da3093109d41
+{"id":"16700d09-91b1-4dd2-b5ef-da3093109d41","name":"Chai Latte","description":"Spiced black tea with steamed milk.","priceCents":3500,"category":"tea","available":true,"createdAt":"2026-11-10T11:44:18.426Z","updatedAt":"2026-11-10T11:44:18.426Z"}
+
+menu:item:98951fa8-8632-4df4-a1ff-7cec35571de6
+{"id":"98951fa8-8632-4df4-a1ff-7cec35571de6","name":"Flat White","description":"Ristretto shots with silky micro-foam.","priceCents":3400,"category":"coffee","available":true,"createdAt":"2026-11-10T11:44:17.655Z","updatedAt":"2026-11-10T11:44:17.655Z"}
+
+... 14 further menu documents omitted
+
+ORDER DOCUMENTS
+---------------
+orders:index (newest first)
+  2026-11-10T14:12:12.877Z  af86c681-5efe-43db-b493-9d39f695cb49  ORD-0007  collected  R126.00
+  2026-11-10T13:47:58.054Z  6c6a1d8c-739d-46d2-ab3d-3a17ee54ec22  ORD-0006  collected  R68.00
+  2026-11-10T13:46:34.735Z  a4366e9c-b0be-47e9-899c-ef86a0d8f125  ORD-0005  collected  R98.00
+  2026-11-10T12:40:01.366Z  0e1f2c18-6b94-4fb6-b043-0866725fc929  ORD-0004  collected  R104.00
+  2026-11-10T12:20:01.036Z  855d36b1-0b5f-47c5-ac2e-8d4825adf809  ORD-0003  collected  R34.00
+  2026-11-10T12:18:25.579Z  b9e72d97-a714-42e3-9604-60f346ec002d  ORD-0002  collected  R34.00
+  2026-11-10T12:17:57.878Z  fac69e40-0ee8-4ebd-8a53-c57346b7e5e8  ORD-0001  collected  R56.00
+
+Most recent order, full document:
+order:af86c681-5efe-43db-b493-9d39f695cb49
+{"id":"af86c681-5efe-43db-b493-9d39f695cb49","orderNumber":"ORD-0007","customerName":"leluma","note":"no sugar","items":[{"itemId":"b4804488-be84-4af9-87a3-999f275dcf5c","name":"Rooibos Tea","priceCents":2000,"qty":1,"lineTotalCents":2000},{"itemId":"96bcca1d-7420-41cb-a3d9-aa203c726951","name":"Blueberry Muffin","priceCents":2600,"qty":1,"lineTotalCents":2600},{"itemId":"2ca54f18-c419-4de5-9833-f54977e62600","name":"Cappuccino","priceCents":3200,"qty":1,"lineTotalCents":3200},{"itemId":"5934110c-3af4-4461-8b60-cec44b13f0bb","name":"Breakfast Bagel","priceCents":4800,"qty":1,"lineTotalCents":4800}],"totalCents":12600,"status":"collected","createdAt":"2026-11-10T14:12:12.877Z","updatedAt":"2026-11-10T14:13:19.614Z"}
+
+ORDER NUMBER COUNTER
+--------------------
+counter:order = 7   (next order becomes ORD-0008)
+
+DAILY SUMMARY HASHES
+--------------------
+  stats:day:2026-11-10  {"orderCount":"7","revenueCents":"52000"}
+
+STATUS INDEXES
+--------------
+  orders:status:pending    0
+  orders:status:preparing  0
+  orders:status:ready      0
+  orders:status:collected  7
+
+PERSISTENCE CHECK
+-----------------
+The API was restarted during this session (see /api/health uptimeSeconds) and all
+33 keys above were still present, including the order counter and the daily hash.
