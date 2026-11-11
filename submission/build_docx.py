@@ -24,6 +24,7 @@ OUT = os.path.join(HERE, "BIWA2110-Ground-and-Grain-Report.docx")
 # NUMPAGES field is unreliable when fields are updated without an interactive
 # layout pass, so the second build writes the total as plain text instead.
 TOTAL_PAGES = sys.argv[1] if len(sys.argv) > 1 else None
+WORD_COUNT = sys.argv[2] if len(sys.argv) > 2 else None
 
 BROWN = RGBColor(0x7A, 0x3E, 0x12)
 BROWN_SOFT = RGBColor(0x92, 0x40, 0x0E)
@@ -2066,6 +2067,10 @@ for tbl in doc.tables:
     for row in tbl.rows:
         for cell in row.cells:
             words += len(cell.text.split())
+
+if WORD_COUNT:
+    # Word's own statistic, passed in from the measuring pass
+    words = int(WORD_COUNT.replace(",", "").replace(" ", ""))
 
 wc_run.text = "Word count: approximately %s words (body text, tables and appendices)." % format(words, ",")
 
