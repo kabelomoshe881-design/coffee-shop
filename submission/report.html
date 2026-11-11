@@ -1,0 +1,1453 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Ground &amp; Grain — BIWA2110 Project Report</title>
+<style>
+  :root {
+    --brown: #7a3e12;
+    --brown-soft: #92400e;
+    --ink: #241c15;
+    --ink-soft: #4b3f34;
+    --muted: #6f6255;
+    --line: #ded3c2;
+    --cream: #fbf6ec;
+    --cream-deep: #f3ead9;
+  }
+
+  * { box-sizing: border-box; }
+
+  @page {
+    size: A4;
+    margin: 20mm 18mm 18mm;
+  }
+
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  body {
+    margin: 0;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 10.5pt;
+    line-height: 1.55;
+    color: var(--ink);
+    background: #fff;
+  }
+
+  h1, h2, h3, h4, .sans {
+    font-family: "Segoe UI", Calibri, Arial, sans-serif;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+
+  h1 { font-size: 22pt; margin: 0 0 6mm; }
+  h2 {
+    font-size: 15pt;
+    margin: 0 0 3mm;
+    padding-bottom: 2mm;
+    border-bottom: 1.5pt solid var(--brown-soft);
+    color: var(--brown);
+  }
+  h3 { font-size: 11.5pt; margin: 6mm 0 2mm; color: var(--brown-soft); }
+  h4 { font-size: 10pt; margin: 4mm 0 1.5mm; }
+
+  p { margin: 0 0 3mm; text-align: justify; }
+  ul, ol { margin: 0 0 3mm; padding-left: 6mm; }
+  li { margin-bottom: 1.2mm; }
+
+  a { color: var(--brown-soft); text-decoration: none; }
+
+  code, pre, .mono {
+    font-family: "Cascadia Mono", Consolas, "Courier New", monospace;
+    font-size: 8.8pt;
+  }
+
+  code {
+    background: var(--cream-deep);
+    padding: 0.4mm 1.2mm;
+    border-radius: 1mm;
+  }
+
+  pre {
+    background: #f7f2e8;
+    border: 0.5pt solid var(--line);
+    border-left: 3pt solid var(--brown-soft);
+    padding: 3mm 4mm;
+    border-radius: 1.5mm;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    line-height: 1.4;
+    margin: 0 0 4mm;
+    page-break-inside: avoid;
+  }
+
+  pre code { background: none; padding: 0; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 0 4mm;
+    font-family: "Segoe UI", Calibri, Arial, sans-serif;
+    font-size: 8.8pt;
+    page-break-inside: avoid;
+  }
+
+  th {
+    background: var(--cream-deep);
+    text-align: left;
+    font-weight: 600;
+    color: var(--ink-soft);
+    border-bottom: 1pt solid var(--line);
+    padding: 2mm 2.4mm;
+  }
+
+  td {
+    border-bottom: 0.5pt solid var(--line);
+    padding: 1.8mm 2.4mm;
+    vertical-align: top;
+  }
+
+  tr:last-child td { border-bottom: none; }
+
+  figure { margin: 0 0 5mm; page-break-inside: avoid; }
+  figure img {
+    width: 100%;
+    border: 0.5pt solid var(--line);
+    border-radius: 1.5mm;
+    display: block;
+  }
+  figcaption {
+    font-family: "Segoe UI", Calibri, Arial, sans-serif;
+    font-size: 8.5pt;
+    color: var(--muted);
+    margin-top: 1.6mm;
+    text-align: center;
+  }
+
+  .fig-row { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }
+  .fig-row figure { margin-bottom: 4mm; }
+
+  .cover {
+    min-height: 245mm;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    page-break-after: always;
+  }
+
+  .cover__band {
+    background: var(--cream);
+    border: 0.5pt solid var(--line);
+    border-radius: 3mm;
+    padding: 14mm 12mm;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 4mm;
+    margin-bottom: 12mm;
+  }
+
+  .brand__mark {
+    width: 14mm;
+    height: 14mm;
+    border-radius: 50%;
+    background: var(--brown-soft);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 14pt;
+    font-weight: 700;
+    letter-spacing: 0.5pt;
+  }
+
+  .brand__name {
+    font-family: "Segoe UI", Calibri, Arial, sans-serif;
+    font-size: 12pt;
+    font-weight: 700;
+    letter-spacing: 1.4pt;
+    text-transform: uppercase;
+    color: var(--brown);
+  }
+
+  .brand__sub {
+    font-family: "Segoe UI", Calibri, Arial, sans-serif;
+    font-size: 8.5pt;
+    color: var(--muted);
+    letter-spacing: 0.6pt;
+    text-transform: uppercase;
+  }
+
+  .cover__kicker {
+    font-family: "Segoe UI", Calibri, Arial, sans-serif;
+    font-size: 9pt;
+    letter-spacing: 2.2pt;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4mm;
+  }
+
+  .cover h1 {
+    font-size: 30pt;
+    line-height: 1.08;
+    margin-bottom: 5mm;
+    color: var(--ink);
+  }
+
+  .cover__sub {
+    font-size: 12pt;
+    color: var(--ink-soft);
+    max-width: 140mm;
+    text-align: left;
+  }
+
+  .cover__meta {
+    font-family: "Segoe UI", Calibri, Arial, sans-serif;
+    font-size: 9pt;
+    color: var(--ink-soft);
+  }
+
+  .cover__meta table { font-size: 9pt; margin: 0; }
+  .cover__meta td { padding: 1.2mm 0; border: none; }
+  .cover__meta td:first-child { width: 34mm; color: var(--muted); }
+
+  .toc { page-break-after: always; }
+  .toc ol { list-style: none; padding: 0; margin: 0; }
+  .toc li {
+    font-family: "Segoe UI", Calibri, Arial, sans-serif;
+    font-size: 9.5pt;
+    padding: 1.4mm 0;
+    border-bottom: 0.5pt dotted var(--line);
+    color: var(--ink-soft);
+  }
+  .toc li span { color: var(--muted); font-size: 8.5pt; }
+  .toc li.sub { padding-left: 7mm; font-size: 8.8pt; color: var(--muted); border-bottom: none; padding-top: 0.6mm; }
+
+  .section { page-break-before: always; }
+
+  .callout {
+    background: var(--cream);
+    border-left: 3pt solid var(--brown-soft);
+    border-radius: 1.5mm;
+    padding: 3mm 4mm;
+    margin: 0 0 4mm;
+    font-size: 9.5pt;
+    page-break-inside: avoid;
+  }
+  .callout strong { color: var(--brown); }
+
+  .kv {
+    font-family: "Cascadia Mono", Consolas, monospace;
+    font-size: 8.5pt;
+    background: #f7f2e8;
+    border: 0.5pt solid var(--line);
+    border-radius: 1.5mm;
+    padding: 3mm 4mm;
+    margin-bottom: 4mm;
+    white-space: pre-wrap;
+    page-break-inside: avoid;
+  }
+
+  .pill {
+    display: inline-block;
+    font-family: "Segoe UI", Calibri, Arial, sans-serif;
+    font-size: 7.8pt;
+    padding: 0.6mm 2mm;
+    border-radius: 8mm;
+    background: var(--cream-deep);
+    color: var(--brown);
+    border: 0.5pt solid var(--line);
+  }
+
+  .small { font-size: 8.8pt; color: var(--muted); }
+  .center { text-align: center; }
+  .avoid { page-break-inside: avoid; }
+  .cols-2 { column-count: 2; column-gap: 8mm; }
+
+  .appendix pre { font-size: 7.6pt; }
+  .appendix table { font-size: 8.2pt; }
+</style>
+</head>
+<body>
+
+<!-- ================= COVER ================= -->
+<div class="cover">
+  <div class="cover__band">
+    <div class="brand">
+      <div class="brand__mark">G</div>
+      <div>
+        <div class="brand__name">Ground &amp; Grain</div>
+        <div class="brand__sub">Coffee Roasters · Est. 2019</div>
+      </div>
+    </div>
+
+    <p class="cover__kicker">BIWA2110 · Web Application Development</p>
+    <h1>Ground &amp; Grain<br>Coffee Shop Management System</h1>
+    <p class="cover__sub">
+      A full-stack ordering and shop-management application built with React, Express,
+      the Fetch API and a key-value NoSQL store — designed, implemented, tested and
+      deployed to the public internet.
+    </p>
+  </div>
+
+  <div class="cover__meta">
+    <table>
+      <tr><td>Module</td><td>BIWA2110 — Web Application Development</td></tr>
+      <tr><td>Assessment</td><td>Group project · final submission</td></tr>
+      <tr><td>Project</td><td>Ground &amp; Grain Coffee Shop Management System</td></tr>
+      <tr><td>Live application</td><td>https://coffee-shop-omega-lovat.vercel.app</td></tr>
+      <tr><td>Live API</td><td>https://ground-and-grain-api.onrender.com/api/health</td></tr>
+      <tr><td>Source code</td><td>https://github.com/kabelomoshe881-design/coffee-shop</td></tr>
+      <tr><td>Submission date</td><td>10 November 2026</td></tr>
+    </table>
+
+    <table style="margin-top:8mm">
+      <tr><td>Group members</td><td><em>to be completed</em></td></tr>
+      <tr><td>Student numbers</td><td><em>to be completed</em></td></tr>
+      <tr><td>Lecturer</td><td><em>to be completed</em></td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ================= FRONT MATTER ================= -->
+<h1 style="font-size:18pt">Declaration</h1>
+<p>
+  We declare that this project is our own original work. All sources, libraries and
+  documentation consulted are acknowledged in the References section. The application,
+  its documentation and its deployment were produced by the group members listed on the
+  cover page, and the contribution of each member is recorded in Appendix D and in the
+  repository history.
+</p>
+
+<table>
+  <tr><th style="width:44%">Name and surname</th><th style="width:20%">Student number</th><th>Signature</th></tr>
+  <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+</table>
+
+<p class="small">Date: ____________________</p>
+
+<h2 style="margin-top:10mm">Abstract</h2>
+<p>
+  Campus coffee shops lose time to a queue that exists mainly because ordering is manual:
+  a customer reads a board, queues to speak to a barista, and waits for a paper ticket to be
+  called out. This project replaces that flow with a browser-based system. Customers browse a
+  live menu, build a cart that survives a refresh, place an order and track its progress
+  without reloading the page. Staff sign in to a protected dashboard where they manage the
+  menu, advance orders through a fixed workflow and see the day's revenue as it happens.
+</p>
+<p>
+  The system is a three-tier application. A React single-page application talks to an Express
+  REST API over the Fetch API using JSON and a bearer token. Every menu item and order is
+  stored as a JSON document under a unique key in Redis, with explicit index sets and sorted
+  sets standing in for relational queries. The API is validated with Zod, secured with
+  bcrypt, JWT, Helmet, strict CORS and rate limiting, and covered by ten automated integration
+  tests. Both halves are deployed to free-tier hosting — Vercel for the client, Render for the
+  API, Upstash for the database — and the live system was verified end to end, including
+  accessibility, responsive layouts and a production login that fails closed when the password
+  hash is missing.
+</p>
+
+<!-- ================= TOC ================= -->
+<div class="toc">
+  <h2>Contents</h2>
+  <ol>
+    <li>Introduction <span>· background, problem, objectives, scope</span></li>
+    <li class="sub">1.1 Background &nbsp; 1.2 Problem statement &nbsp; 1.3 Objectives &nbsp; 1.4 Scope &nbsp; 1.5 Group roles</li>
+    <li>Requirements analysis <span>· functional, non-functional, user stories</span></li>
+    <li class="sub">2.1 Stakeholders &nbsp; 2.2 Functional requirements &nbsp; 2.3 Non-functional requirements &nbsp; 2.4 User stories &nbsp; 2.5 Constraints</li>
+    <li>System design <span>· architecture, data model, API, security, UI</span></li>
+    <li class="sub">3.1 Architecture &nbsp; 3.2 Frontend &nbsp; 3.3 Backend &nbsp; 3.4 Data model &nbsp; 3.5 API &nbsp; 3.6 State machine &nbsp; 3.7 Security &nbsp; 3.8 UI/UX</li>
+    <li>Implementation <span>· stack choices and the decisions that matter</span></li>
+    <li class="sub">4.1 Stack &nbsp; 4.2 Backend &nbsp; 4.3 Frontend &nbsp; 4.4 Error handling &nbsp; 4.5 Case study: the focus bug &nbsp; 4.6 Code quality</li>
+    <li>Testing and quality assurance <span>· automated, end-to-end, accessibility</span></li>
+    <li class="sub">5.1 Strategy &nbsp; 5.2 API tests &nbsp; 5.3 Results &nbsp; 5.4 E2E &nbsp; 5.5 Accessibility &nbsp; 5.6 Responsive &nbsp; 5.7 Performance &nbsp; 5.8 Security &nbsp; 5.9 Defect log</li>
+    <li>Deployment <span>· Vercel, Render, Upstash</span></li>
+    <li class="sub">6.1 Topology &nbsp; 6.2 Environment &nbsp; 6.3 Procedure &nbsp; 6.4 Delivery pipeline &nbsp; 6.5 Free-tier limits &nbsp; 6.6 Live verification</li>
+    <li>Challenges and lessons learned</li>
+    <li>Conclusion and future work</li>
+    <li>References</li>
+    <li>Appendix A — API reference</li>
+    <li>Appendix B — Key-value schema</li>
+    <li>Appendix C — Automated test output</li>
+    <li>Appendix D — Contribution record and repository evidence</li>
+    <li>Appendix E — Screenshot index</li>
+    <li>Appendix F — Viva preparation</li>
+  </ol>
+</div>
+
+<!-- ================= 1 INTRODUCTION ================= -->
+<div class="section">
+  <h2>1. Introduction</h2>
+
+  <h3>1.1 Background</h3>
+  <p>
+    Ground &amp; Grain is a small coffee roaster and counter-service café. Its current ordering
+    process is entirely verbal: a customer reads a printed board, queues at the till, gives an
+    order to a barista, and waits for their name to be called. During the morning peak this
+    produces three problems. The queue is longer than the kitchen work it represents, because
+    every order needs a conversation; the board cannot show what has sold out; and nobody can
+    say how much the shop has taken today without adding up a till slip at closing time.
+  </p>
+  <p>
+    The brief for BIWA2110 asks for a web application that uses a React frontend, an Express
+    REST API, the Fetch API and a key-value NoSQL database. Rather than build a generic CRUD
+    demo, this project applies those technologies to that real operational problem, so every
+    technical decision has a user-facing consequence.
+  </p>
+
+  <h3>1.2 Problem statement</h3>
+  <p>
+    Customers cannot see an accurate, real-time menu without joining a queue, and staff have no
+    single place to manage availability, work orders in sequence or measure the day's takings.
+    The result is avoidable waiting, avoidable errors when an item runs out, and no operational
+    visibility. A browser-based ordering and management system can remove the queue from the
+    critical path: the customer orders from their own phone, and the barista works a queue that
+    is already written down.
+  </p>
+
+  <h3>1.3 Objectives</h3>
+  <ol>
+    <li>Build a customer-facing menu that reflects live availability, supports search and category filtering, and works on a phone.</li>
+    <li>Implement a cart that persists across refreshes and a checkout that produces a unique, shareable order number.</li>
+    <li>Give customers a confirmation page that tracks order status without a manual reload.</li>
+    <li>Protect a staff area with authentication and authorise every write operation on the server, not in the browser.</li>
+    <li>Provide staff with menu CRUD, a live order board, an orders table and daily revenue figures.</li>
+    <li>Persist all data in a key-value NoSQL store with indexes that avoid full-database scans.</li>
+    <li>Validate every input, return one consistent error format, and limit abuse with rate limiting.</li>
+    <li>Meet WCAG 2.2 AA contrast, be fully keyboard-operable, and support light and dark themes.</li>
+    <li>Deploy the complete system to public URLs on free-tier infrastructure and verify it end to end.</li>
+    <li>Document setup, architecture, API, data model and contribution so another developer can run it unaided.</li>
+  </ol>
+
+  <h3>1.4 Scope and delimitations</h3>
+  <p>
+    The system covers ordering and shop operations, not payment. Orders are collected and paid
+    for at the counter, which is stated in the checkout panel so the customer is never misled.
+    There is one staff account rather than a user-management system: the brief requires
+    staff-only endpoints, and a role model would add a second domain (accounts) without
+    improving the assessed behaviours. Prices are in South African rand and are stored as
+    integer cents. Delivery, email receipts, stock decrementing and supplier ordering are out of
+    scope and are listed as future work in Section 8.
+  </p>
+
+  <h3>1.5 Group roles</h3>
+  <table>
+    <tr><th style="width:30%">Member</th><th style="width:22%">Student number</th><th>Primary responsibility</th></tr>
+    <tr><td><em>Name 1</em></td><td><em>00000000</em></td><td>Backend API, key-value data model, automated tests</td></tr>
+    <tr><td><em>Name 2</em></td><td><em>00000000</em></td><td>Customer experience: menu, cart, confirmation</td></tr>
+    <tr><td><em>Name 3</em></td><td><em>00000000</em></td><td>Staff dashboard, authentication, menu management</td></tr>
+    <tr><td><em>Name 4</em></td><td><em>00000000</em></td><td>Design system, documentation, deployment</td></tr>
+  </table>
+  <p class="small">
+    The ownership map in <code>docs/contributions.md</code> maps each area to specific files so
+    that the split is verifiable from the repository, and Appendix D records the branch and pull
+    request evidence.
+  </p>
+</div>
+
+<!-- ================= 2 REQUIREMENTS ================= -->
+<div class="section">
+  <h2>2. Requirements analysis</h2>
+
+  <h3>2.1 Stakeholders and personas</h3>
+  <p>
+    Two personas drove the design. <strong>Thandi, the customer</strong>, is on a phone, on
+    campus Wi-Fi, with about ninety seconds to order. She needs to see what is available, know
+    the price before committing, and be confident the order went through. <strong>Sipho, the
+    barista-manager</strong>, is behind a counter with wet hands and a queue in front of him. He
+    needs large tap targets, an obvious next action per order, and the ability to mark something
+    sold out the moment it runs out. A third, indirect stakeholder is the owner, who wants the
+    day's revenue without adding up slips.
+  </p>
+
+  <h3>2.2 Functional requirements</h3>
+  <table>
+    <tr><th style="width:11%">ID</th><th style="width:47%">Requirement</th><th>Implementation</th></tr>
+    <tr><td>FR-01</td><td>Customers can view the menu grouped by category, with name, description, price and availability.</td><td><code>GET /api/menu</code>; <code>MenuPage.jsx</code></td></tr>
+    <tr><td>FR-02</td><td>Customers can search by name or description and filter by category.</td><td>Client-side filter over the fetched menu</td></tr>
+    <tr><td>FR-03</td><td>Sold-out items cannot be added to the cart.</td><td>Disabled control + server-side <code>409 ITEM_UNAVAILABLE</code></td></tr>
+    <tr><td>FR-04</td><td>The cart survives a page refresh and supports quantity changes and removal.</td><td><code>CartContext.jsx</code> with <code>localStorage</code></td></tr>
+    <tr><td>FR-05</td><td>Checkout requires a customer name, accepts an optional note, and validates inline.</td><td><code>CartDrawer.jsx</code>; Zod on the server</td></tr>
+    <tr><td>FR-06</td><td>Each order receives a unique, human-readable number.</td><td><code>counter:order</code> with <code>INCR</code> → <code>ORD-0001</code></td></tr>
+    <tr><td>FR-07</td><td>The confirmation page shows the order and tracks status changes without a reload.</td><td><code>ConfirmPage.jsx</code>, 10-second polling of <code>GET /api/orders/:id</code></td></tr>
+    <tr><td>FR-08</td><td>Staff can sign in and every write endpoint requires a valid token.</td><td><code>POST /api/auth/login</code>; <code>requireStaff</code> middleware</td></tr>
+    <tr><td>FR-09</td><td>Staff can create, edit and delete menu items and toggle availability.</td><td>Menu CRUD routes; Menu tab</td></tr>
+    <tr><td>FR-10</td><td>Deleting an item that appears in an open order is refused.</td><td><code>409 ITEM_IN_USE</code> guard in the menu repository</td></tr>
+    <tr><td>FR-11</td><td>Staff can advance an order through pending → preparing → ready → collected.</td><td><code>PATCH /api/orders/:id/status</code>, forward-only</td></tr>
+    <tr><td>FR-12</td><td>Staff can filter orders and see a live three-column board.</td><td>Orders tab; Overview board</td></tr>
+    <tr><td>FR-13</td><td>Staff can see orders today, revenue today, work in progress and ready to collect.</td><td><code>GET /api/orders/summary/today</code></td></tr>
+    <tr><td>FR-14</td><td>The system reports its own health, including the database driver.</td><td><code>GET /api/health</code> → 200 or 503</td></tr>
+  </table>
+
+  <h3>2.3 Non-functional requirements</h3>
+  <table>
+    <tr><th style="width:11%">ID</th><th style="width:31%">Quality attribute</th><th>Target and how it is met</th></tr>
+    <tr><td>NFR-01</td><td>Usability</td><td>Order placed in four interactions from the menu; no page reload at any step; inline validation instead of alert dialogs.</td></tr>
+    <tr><td>NFR-02</td><td>Accessibility</td><td>WCAG 2.2 AA contrast (22/22 checks pass, lowest 6.47:1), visible focus, full keyboard operation, focus trap in dialogs, <code>aria-live</code> for totals, <code>prefers-reduced-motion</code> honoured.</td></tr>
+    <tr><td>NFR-03</td><td>Responsiveness</td><td>One layout from 360 px to 1440 px; verified at 390 px, 768 px and 1440 px.</td></tr>
+    <tr><td>NFR-04</td><td>Performance</td><td>Production bundle 211 kB JavaScript (67 kB gzip) and 38 kB CSS (8 kB gzip); no client-side framework beyond React and the router.</td></tr>
+    <tr><td>NFR-05</td><td>Security</td><td>bcrypt password hash, JWT with expiry, Helmet headers, CORS allowlist, 10 login attempts per 15 minutes, 20 orders per 10 minutes, 32 kB JSON body cap.</td></tr>
+    <tr><td>NFR-06</td><td>Reliability</td><td>Durable Redis persistence; multi-key writes are atomic; health endpoint checks the store; API restarts do not lose data.</td></tr>
+    <tr><td>NFR-07</td><td>Maintainability</td><td>Layered server (routes → repositories → store), one fetch wrapper on the client, design tokens instead of hard-coded colours, 10 automated tests.</td></tr>
+    <tr><td>NFR-08</td><td>Portability</td><td>Two interchangeable store drivers (Redis and JSON file) behind one interface; runs locally with no database installed.</td></tr>
+    <tr><td>NFR-09</td><td>Cost</td><td>Zero cost: Vercel Hobby, Render free web service, Upstash free Redis.</td></tr>
+  </table>
+
+  <h3>2.4 User stories and acceptance criteria</h3>
+  <table>
+    <tr><th style="width:30%">User story</th><th>Acceptance criteria</th></tr>
+    <tr>
+      <td>As a customer, I want to see what is available and what it costs before I order.</td>
+      <td>Menu loads in under two seconds on a warm API; each card shows name, description, price and availability; sold-out items are visually distinct and cannot be added.</td>
+    </tr>
+    <tr>
+      <td>As a customer, I want to change my mind about quantities without losing my cart.</td>
+      <td>Quantity steppers update the line and the total immediately; refreshing the page preserves the cart; removing the last line shows an empty state.</td>
+    </tr>
+    <tr>
+      <td>As a customer, I want proof that my order reached the kitchen.</td>
+      <td>Checkout returns a unique <code>ORD-</code> number; the confirmation page is a real URL that can be reloaded or shared; it shows the current status.</td>
+    </tr>
+    <tr>
+      <td>As a barista, I want to mark an item sold out the moment it runs out.</td>
+      <td>Availability switch in the Menu tab saves immediately; the customer menu reflects it on the next load; ordering it returns <code>409</code>.</td>
+    </tr>
+    <tr>
+      <td>As a barista, I want the next action on an order to be obvious.</td>
+      <td>Each order shows one primary status button; illegal transitions are rejected by the server; the board moves the card between columns.</td>
+    </tr>
+    <tr>
+      <td>As the owner, I want today's takings without adding up slips.</td>
+      <td>Overview shows order count, revenue, in-progress and ready counts; the figures come from a server-side daily summary, not the browser.</td>
+    </tr>
+  </table>
+
+  <h3>2.5 Constraints and assumptions</h3>
+  <ul>
+    <li>Free-tier hosting only. The API may cold-start after inactivity, so the UI must handle a slow first request gracefully.</li>
+    <li>Modern evergreen browsers only; no Internet Explorer support and no polyfill layer.</li>
+    <li>No payment gateway, because none is available without cost or compliance overhead for a student project.</li>
+    <li>The database must be key-value, as required by the brief, so listing and filtering are implemented with indexes rather than SQL.</li>
+    <li>The staff password is supplied as a bcrypt hash in an environment variable; it is never stored in the repository.</li>
+  </ul>
+</div>
+
+<!-- ================= 3 DESIGN ================= -->
+<div class="section">
+  <h2>3. System design</h2>
+
+  <h3>3.1 Architecture</h3>
+  <p>
+    The application is a conventional three-tier system with a hard boundary between browser
+    and data. The React bundle is static and can be served from any CDN; the API is the only
+    component that holds credentials; the database is reachable only from the API.
+  </p>
+<pre>
+┌───────────────────────────────┐
+│  React SPA  ·  Vercel         │
+│  menu · cart · confirmation   │
+│  staff login · dashboard      │
+└──────────────┬────────────────┘
+               │  Fetch API · JSON · Bearer JWT
+               ▼
+┌───────────────────────────────┐
+│  Express REST API  ·  Render  │
+│  /api/menu  /api/orders       │
+│  /api/auth  /api/health       │
+│  Zod · Helmet · CORS · limits │
+└──────────────┬────────────────┘
+               │  ioredis (TLS)
+               ▼
+┌───────────────────────────────┐
+│  Key-value store · Upstash    │
+│  menu:item:{id}   → JSON      │
+│  order:{id}       → JSON      │
+│  index sets + sorted sets     │
+└───────────────────────────────┘
+</pre>
+  <p>
+    The split is not cosmetic. It means the client can be rebuilt and redeployed without
+    touching data, the API can be scaled or replaced without changing the UI contract, and the
+    database credentials exist in exactly one place. It also means every rule that matters —
+    totals, availability, status transitions, authorisation — is enforced where the user cannot
+    edit it.
+  </p>
+
+  <h3>3.2 Frontend architecture</h3>
+  <p>
+    The client is a single-page application built with React 18 and Vite 6. Routing uses
+    <code>react-router-dom</code> with four routes: <code>/</code> for the menu,
+    <code>/order/:id</code> for confirmation, <code>/staff/login</code> and <code>/staff</code>.
+    Confirmation is a real URL rather than a modal state so that a customer can reload it, and
+    so that the order can be reopened later.
+  </p>
+  <p>
+    State is split by lifetime. <code>CartContext</code> owns cart lines and persists them to
+    <code>localStorage</code>; <code>AuthContext</code> owns the staff token and clears it on a
+    <code>401</code>; <code>ToastContext</code> owns transient feedback. Everything else is
+    local component state. A single <code>api.js</code> wrapper performs every request, attaches
+    the bearer token when present, parses the error envelope and throws a typed error, so no
+    component contains fetch boilerplate or invents its own error handling.
+  </p>
+
+  <h3>3.3 Backend architecture</h3>
+  <p>
+    The server is layered so that HTTP concerns never leak into data access. Routes validate and
+    translate; repositories own the key layout and the business rules; store drivers implement a
+    small common interface (<code>get</code>, <code>set</code>, <code>del</code>,
+    <code>sadd</code>, <code>srem</code>, <code>smembers</code>, <code>zadd</code>,
+    <code>zrange</code>, <code>hincrby</code>, <code>incr</code>, <code>multi</code>). That
+    interface is what makes the JSON-file fallback possible: the same repositories run against
+    Redis in production and a file on a laptop, with no conditional logic in business code.
+  </p>
+
+  <h3>3.4 Data model</h3>
+  <p>
+    A key-value store has no <code>WHERE</code> clause, so every listing has to be anticipated at
+    write time. The design uses one document key per entity and a small number of explicit
+    indexes, each written in the same transaction as the document it describes.
+  </p>
+  <table>
+    <tr><th style="width:34%">Key</th><th style="width:14%">Type</th><th>Purpose</th></tr>
+    <tr><td><code>menu:item:{id}</code></td><td>String (JSON)</td><td>The menu item document.</td></tr>
+    <tr><td><code>menu:index</code></td><td>Set</td><td>Every menu item id; the source for <code>GET /api/menu</code>.</td></tr>
+    <tr><td><code>menu:category:{cat}</code></td><td>Set</td><td>Item ids per category, for filtered reads.</td></tr>
+    <tr><td><code>order:{id}</code></td><td>String (JSON)</td><td>The order, including snapshotted line prices.</td></tr>
+    <tr><td><code>orders:index</code></td><td>Sorted set</td><td>Order ids scored by creation time, newest first.</td></tr>
+    <tr><td><code>orders:status:{status}</code></td><td>Set</td><td>Order ids per status, for the board and filters.</td></tr>
+    <tr><td><code>orders:day:{YYYY-MM-DD}</code></td><td>Set</td><td>Order ids per day.</td></tr>
+    <tr><td><code>stats:day:{YYYY-MM-DD}</code></td><td>Hash</td><td><code>orderCount</code> and <code>revenueCents</code>, incremented atomically.</td></tr>
+    <tr><td><code>counter:order</code></td><td>Integer</td><td><code>INCR</code> source for <code>ORD-0001</code> numbers.</td></tr>
+  </table>
+
+  <div class="callout">
+    <strong>Three decisions worth defending in a viva.</strong>
+    <ol style="margin-bottom:0">
+      <li><strong>Prices are snapshotted onto order lines.</strong> Changing a menu price tomorrow must not rewrite yesterday's receipt. The order stores the price it was sold at, not a reference to today's price.</li>
+      <li><strong>Multi-key writes are atomic.</strong> Creating an order writes the document plus four indexes in one <code>MULTI</code>. A crash cannot leave an order that exists but is missing from the board.</li>
+      <li><strong><code>KEYS *</code> is never used.</strong> Every listing goes through an index, so read cost grows with the result size rather than the database size.</li>
+    </ol>
+  </div>
+
+  <p>
+    Prices are integer cents throughout (<code>priceCents</code>). Floating-point cents accumulate
+    error: <code>0.1 + 0.2 !== 0.3</code> in JavaScript. Totals are therefore computed in integers
+    on the server and formatted only at the edge, in one <code>Intl.NumberFormat</code> call.
+  </p>
+
+  <h3>3.5 API design</h3>
+  <p>
+    The API is resource-oriented and returns JSON for everything except <code>204</code>. Twelve
+    endpoints cover the whole system (Appendix A has request and response examples). Every error
+    uses the same envelope, so the client has exactly one error path:
+  </p>
+<pre>{
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "message": "Some fields are invalid",
+    "details": [{ "field": "priceCents", "message": "Price must be at least R0.50" }]
+  }
+}</pre>
+  <p>
+    Status codes carry meaning rather than being uniformly <code>400</code>: <code>401</code> for
+    a missing or invalid token, <code>403 CORS_BLOCKED</code> for an origin that is not allowed,
+    <code>404</code> for an unknown id, <code>409</code> for a state conflict
+    (<code>INVALID_TRANSITION</code>, <code>ITEM_UNAVAILABLE</code>, <code>ITEM_IN_USE</code>),
+    and <code>503</code> from health when the store is unreachable. The client can therefore
+    distinguish "you are not signed in" from "this item is gone" without parsing prose.
+  </p>
+
+  <h3>3.6 Order state machine</h3>
+<pre>
+  ┌─────────┐   ┌───────────┐   ┌───────┐   ┌───────────┐
+  │ pending │ → │ preparing │ → │ ready │ → │ collected │
+  └─────────┘   └───────────┘   └───────┘   └───────────┘
+       └──────────── any other transition → 409 INVALID_TRANSITION
+</pre>
+  <p>
+    The workflow is forward-only and enforced in the repository, not in React. A disabled button
+    is a convenience; the server rule is the guarantee. Skipping a step, or moving backwards,
+    returns <code>409</code> with the current and requested status in the message, which makes a
+    stale dashboard tab fail safely instead of corrupting the queue.
+  </p>
+
+  <h3>3.7 Security design</h3>
+  <table>
+    <tr><th style="width:30%">Control</th><th>Implementation</th></tr>
+    <tr><td>Password storage</td><td>bcrypt hash (<code>STAFF_PASSWORD_HASH</code>), cost 10; the plaintext password never exists on the server.</td></tr>
+    <tr><td>Session</td><td>Signed JWT carrying <code>{ sub, role: "staff" }</code>, 8-hour expiry, verified on every protected request.</td></tr>
+    <tr><td>Authorisation</td><td><code>requireStaff</code> on every write route; public reads are limited to the menu, order tracking and health.</td></tr>
+    <tr><td>Transport and headers</td><td>HTTPS everywhere; Helmet sets <code>X-Content-Type-Options</code>, frame and referrer policy, and removes <code>X-Powered-By</code>.</td></tr>
+    <tr><td>CORS</td><td>Explicit origin allowlist from <code>FRONTEND_URL</code>; unknown origins receive <code>403 CORS_BLOCKED</code>.</td></tr>
+    <tr><td>Rate limiting</td><td>Login 10 / 15 min per IP; order creation 20 / 10 min; global 300 / 15 min.</td></tr>
+    <tr><td>Input limits</td><td>JSON body capped at 32 kB; every write validated by a Zod schema with length and range bounds.</td></tr>
+    <tr><td>Fail closed</td><td>In production, an unset <code>STAFF_PASSWORD_HASH</code> disables login instead of falling back to a known default. This was verified with a live 401.</td></tr>
+  </table>
+  <p>
+    The last row is a deliberate reversal of the usual demo-friendly default. A misconfigured
+    deployment should be unusable by staff, not open to anyone who has read the source. The
+    development fallback remains for local work but is gated on <code>NODE_ENV !== "production"</code>.
+  </p>
+
+  <h3>3.8 UI and UX design</h3>
+  <p>
+    The interface is built from a design system recorded in
+    <code>design-system/ground-and-grain/MASTER.md</code>, with per-page overrides for the menu,
+    cart and dashboard. Every colour, space, radius and motion value is a CSS custom property in
+    <code>tokens.css</code>; components never hard-code a hex value. That is what makes the dark
+    theme a token swap rather than a second stylesheet.
+  </p>
+  <table>
+    <tr><th style="width:24%">Element</th><th>Decision</th></tr>
+    <tr><td>Palette</td><td>Warm brown <code>#92400E</code> on cream <code>#FBF6EC</code>, with a full dark counterpart. Brown reads as coffee without the cliché of pure black; cream lowers glare under counter lighting.</td></tr>
+    <tr><td>Typography</td><td>Playfair Display for display headings, Karla for body and controls, system mono for order numbers. Order numbers are data, so they get a face where <code>0</code> and <code>O</code> are unambiguous.</td></tr>
+    <tr><td>Layout</td><td>Maximum content width with a 12-column rhythm; the dashboard runs denser than the customer surface because it is scanned, not read.</td></tr>
+    <tr><td>Motion</td><td>Short (120–220 ms) transitions on state change only; all disabled under <code>prefers-reduced-motion</code>.</td></tr>
+    <tr><td>Feedback</td><td>Skeletons on first load, silent background refreshes afterwards, inline field errors, and a toast for actions that leave the screen.</td></tr>
+    <tr><td>Accessibility</td><td>Semantic landmarks, labelled controls, visible focus ring, focus trap and Escape in dialogs, <code>aria-live</code> for cart totals and status, 44 px minimum targets.</td></tr>
+  </table>
+
+  <div class="fig-row">
+    <figure>
+      <img src="screenshots/01-menu-light.png" alt="Menu page in light mode">
+      <figcaption>Figure 1 — Customer menu, light theme, 1440 × 900.</figcaption>
+    </figure>
+    <figure>
+      <img src="screenshots/03-cart.png" alt="Cart drawer with two items and a customer name">
+      <figcaption>Figure 2 — Cart drawer with quantity steppers and checkout form.</figcaption>
+    </figure>
+  </div>
+</div>
+
+<!-- ================= 4 IMPLEMENTATION ================= -->
+<div class="section">
+  <h2>4. Implementation</h2>
+
+  <h3>4.1 Stack and justification</h3>
+  <table>
+    <tr><th style="width:18%">Layer</th><th style="width:30%">Choice</th><th>Why this and not the alternative</th></tr>
+    <tr><td>Frontend</td><td>React 18 + Vite 6</td><td>Component model fits a menu/cart/dashboard split; Vite gives sub-second HMR and a 211 kB production bundle without a framework runtime.</td></tr>
+    <tr><td>Routing</td><td>react-router-dom 6</td><td>The confirmation page must be a real URL. A single-page state machine would break reloads and sharing.</td></tr>
+    <tr><td>Styling</td><td>Hand-written CSS with tokens</td><td>No utility-class churn and no build step for styles; the design system is readable by a marker.</td></tr>
+    <tr><td>Backend</td><td>Express 4 (ESM)</td><td>Minimal ceremony for twelve endpoints, and the middleware model maps cleanly onto auth, validation and errors.</td></tr>
+    <tr><td>Validation</td><td>Zod 3</td><td>One schema per write, machine-readable issues that become the <code>details</code> array without hand-written branching.</td></tr>
+    <tr><td>Auth</td><td>JWT + bcryptjs</td><td>Stateless sessions suit a single free-tier instance; bcrypt is deliberately slow, which is the point.</td></tr>
+    <tr><td>Database</td><td>Redis via ioredis</td><td>Key-value as required, with atomic <code>MULTI</code>, sets and sorted sets — enough structure to avoid scanning.</td></tr>
+    <tr><td>Testing</td><td>Vitest + Supertest</td><td>Tests run against the real Express app and a real file store, in about 4.6 seconds.</td></tr>
+  </table>
+
+  <h3>4.2 Backend implementation</h3>
+  <p>
+    The application is created by a factory, <code>createApp({ store, config })</code>, rather than
+    at import time. That one decision is what makes the API testable: a test can construct an app
+    with a temporary file store and a test configuration, with no ports, no environment variables
+    and no shared state between tests.
+  </p>
+  <p>
+    Order creation is the most delicate operation. The client sends item ids and quantities only;
+    the server re-reads every item, rejects unavailable ones, recomputes the total from the
+    current price, snapshots that price onto each line, allocates the next order number and writes
+    the document plus four indexes in one transaction:
+  </p>
+<pre>const orderNumber = `ORD-${String(await store.incr('counter:order')).padStart(4, '0')}`;
+
+const multi = store.multi();
+multi.set(`order:${id}`, JSON.stringify(order));
+multi.zadd('orders:index', createdAtMs, id);
+multi.sadd(`orders:status:${order.status}`, id);
+multi.sadd(`orders:day:${day}`, id);
+multi.hincrby(`stats:day:${day}`, 'orderCount', 1);
+multi.hincrby(`stats:day:${day}`, 'revenueCents', order.totalCents);
+await multi.exec();</pre>
+  <p>
+    The total is never taken from the request. A test sends <code>totalCents: 1</code> alongside two
+    items priced at R30 and asserts that the stored total is 6000 cents — the server ignores the
+    client's arithmetic entirely. The same rule protects the daily summary: it is incremented
+    inside the transaction, so it cannot drift from the orders it describes.
+  </p>
+  <p>
+    Deletion has a similar guard. Before removing an item, the repository checks the open-order
+    indexes for any order that references it. If one exists, the request fails with
+    <code>409 ITEM_IN_USE</code> rather than leaving a receipt that points at a menu item that no
+    longer exists.
+  </p>
+
+  <h3>4.3 Frontend implementation</h3>
+  <p>
+    The cart is the piece users notice. Lines are stored as
+    <code>{ itemId, name, priceCents, qty }</code> in <code>localStorage</code> and rehydrated on
+    boot, so a refresh, a phone call or a accidental back-navigation does not lose an order. The
+    displayed total is computed from those lines, but it is a convenience: the authoritative total
+    is the one the server returns.
+  </p>
+  <p>
+    The confirmation page polls <code>GET /api/orders/:id</code> every ten seconds and stops when
+    the order is collected. Polling was chosen over WebSockets deliberately: the data changes at
+    human speed, the free-tier API may sleep, and a ten-second interval is one request per order
+    per ten seconds rather than a permanently open connection. A failed poll is silent and retried
+    on the next tick; only the first load can show an error.
+  </p>
+  <p>
+    The dashboard follows the same pattern: a skeleton on first load, then silent background
+    refreshes every fifteen seconds so the board stays current without flashing. A <code>401</code>
+    from any request clears the token and returns the user to the login screen, which is handled
+    once in <code>AuthContext</code> rather than in each page.
+  </p>
+
+  <h3>4.4 Error handling</h3>
+  <p>
+    There are three layers and each has one job. Zod produces field-level messages for the form.
+    The API translates domain conflicts into typed codes with meaningful status codes. The client
+    normalises everything into an <code>ApiError</code> carrying <code>code</code>,
+    <code>message</code> and <code>details</code>, then renders it either inline (field errors), as
+    a banner (page-level failures) or as a toast (background action failures). No component
+    inspects <code>response.ok</code> or parses a message string.
+  </p>
+
+  <h3>4.5 Case study: the dialog that closed itself</h3>
+  <p>
+    During acceptance testing, typing a single character into the "Add menu item" dialog moved
+    focus to the close button, so the next keystroke dismissed the form. The visible symptom looked
+    like a state bug; the cause was an effect dependency. The modal's <code>useEffect</code> listed
+    <code>onClose</code>, and the parent passed an inline arrow, so every keystroke created a new
+    function, tore down the effect (whose cleanup restored focus to the trigger) and re-ran its
+    setup (which focused the first focusable element — the X button, which precedes the form in DOM
+    order).
+  </p>
+  <p>
+    The fix was to keep the callback in a ref and depend only on <code>open</code>, so the effect
+    runs once per open/close cycle. Focus now lands on the first form field, and a Tab trap keeps
+    keyboard users inside the dialog. The same pattern was applied to the cart drawer. A
+    seven-check browser test now covers focus on open, full-word typing, focus retention, modal
+    persistence, Shift+Tab wrapping, Escape and the cart name field.
+  </p>
+
+  <h3>4.6 Code quality</h3>
+  <p>
+    The system is 5,466 lines across 36 source files: 2,053 lines of JavaScript and JSX on the
+    client, 2,358 lines of CSS, 924 lines on the server and 131 lines of tests. There is no dead
+    dependency and no unused route. Naming follows the domain (<code>priceCents</code>,
+    <code>orderNumber</code>, <code>byStatus</code>), the server is layered so that a change to
+    Redis never reaches a route, and the client has one place for requests, one for formatting and
+    one for each context.
+  </p>
+  <p>
+    Commits are small and scoped: scaffold, deployment, documentation, the credentials fix, and the
+    focus fix. Each message states the intent, and the diff for the focus fix is two files — the
+    smallest change that addresses the cause rather than the symptom.
+  </p>
+</div>
+
+<!-- ================= 5 TESTING ================= -->
+<div class="section">
+  <h2>5. Testing and quality assurance</h2>
+
+  <h3>5.1 Strategy</h3>
+  <p>
+    Testing follows the shape of the risk. Business rules that can lose money or corrupt state —
+    totals, availability, transitions, deletion guards — are covered by automated integration
+    tests that exercise the real Express app against a real store. Flows that depend on the browser
+    — focus, keyboard navigation, responsive layout, polling — were verified with scripted
+    end-to-end checks in a real Chromium browser against both the local and the deployed build.
+    Visual and accessibility checks were run on the deployed site, because that is what a marker
+    will open.
+  </p>
+
+  <h3>5.2 Automated API tests</h3>
+  <p>
+    Ten tests run in <code>server/test/api.test.js</code> with Vitest and Supertest. Each test gets a
+    fresh temporary file store, so there is no ordering dependency and no shared state.
+  </p>
+  <table>
+    <tr><th style="width:8%">#</th><th style="width:32%">Test</th><th>What it proves</th></tr>
+    <tr><td>1</td><td>Health reports the store driver</td><td>The health endpoint is wired to the real store and reports <code>ok</code> with the driver name.</td></tr>
+    <tr><td>2</td><td>Lists seeded items publicly</td><td>The menu is readable without a token and returns the stored items.</td></tr>
+    <tr><td>3</td><td>Rejects writes without a token</td><td>Authorisation is enforced server-side, not hidden in the UI.</td></tr>
+    <tr><td>4</td><td>Validates the payload</td><td>Bad name, negative price and unknown category produce <code>400 VALIDATION_ERROR</code> with field details.</td></tr>
+    <tr><td>5</td><td>Returns 404 for an unknown item</td><td>Missing resources are distinguished from validation failures.</td></tr>
+    <tr><td>6</td><td>Recomputes totals from server prices</td><td>A client-supplied total of 1 cent is ignored; two R30 items store 6000 cents.</td></tr>
+    <tr><td>7</td><td>Rejects an unavailable item</td><td>Availability is enforced at order time with <code>409 ITEM_UNAVAILABLE</code>.</td></tr>
+    <tr><td>8</td><td>Enforces forward-only transitions</td><td><code>pending → collected</code> fails with <code>409</code>; <code>pending → preparing</code> succeeds.</td></tr>
+    <tr><td>9</td><td>Blocks deleting an item in an open order</td><td>The delete guard returns <code>409 ITEM_IN_USE</code>.</td></tr>
+    <tr><td>10</td><td>Returns a daily summary</td><td>Order count, revenue and per-status counts are correct after an order.</td></tr>
+  </table>
+
+  <h3>5.3 Results</h3>
+  <figure>
+    <img src="screenshots/06-dashboard-overview.png" alt="Staff dashboard overview with daily totals and order board">
+    <figcaption>Figure 3 — Staff overview: today's orders, revenue, work in progress, ready to collect, and the live board.</figcaption>
+  </figure>
+<pre> ✓ test/api.test.js (10 tests) 466ms
+   Test Files  1 passed (1)
+        Tests  10 passed (10)
+     Duration  4.65s</pre>
+  <p class="small">Full output in Appendix C. The suite was re-run after every change, including the credentials and focus fixes.</p>
+
+  <h3>5.4 End-to-end scenarios</h3>
+  <p>
+    These were executed against the deployed application in Chromium, not against a mock. Each row
+    is a real interaction with real data.
+  </p>
+  <table>
+    <tr><th style="width:8%">#</th><th style="width:36%">Scenario</th><th>Observed result</th></tr>
+    <tr><td>1</td><td>Load the menu cold</td><td>16 items in four categories; skeleton replaced by content; no console errors.</td></tr>
+    <tr><td>2</td><td>Search for "flat"</td><td>Only matching items remain; clearing restores the full menu.</td></tr>
+    <tr><td>3</td><td>Add two items and change quantity</td><td>Badge and total update immediately; stepper respects the maximum.</td></tr>
+    <tr><td>4</td><td>Refresh with a populated cart</td><td>Cart survives, badge and total restored from <code>localStorage</code>.</td></tr>
+    <tr><td>5</td><td>Checkout without a name</td><td>Inline error, focus moved to the name field, no request sent.</td></tr>
+    <tr><td>6</td><td>Place a valid order</td><td>Navigates to <code>/order/{id}</code>; unique <code>ORD-</code> number; tracker shows <em>pending</em>.</td></tr>
+    <tr><td>7</td><td>Reload the confirmation URL</td><td>Same order renders; deep link resolves through the Vercel rewrite.</td></tr>
+    <tr><td>8</td><td>Sign in with the staff password</td><td><code>200</code>, token stored, dashboard loads.</td></tr>
+    <tr><td>9</td><td>Sign in with a wrong password</td><td><code>401</code> with a message that does not reveal which field was wrong.</td></tr>
+    <tr><td>10</td><td>Advance an order</td><td>Board card moves column; customer page updates on its next poll; summary revenue unchanged.</td></tr>
+    <tr><td>11</td><td>Create a menu item</td><td>Appears in the Menu tab and on the customer menu after refresh.</td></tr>
+    <tr><td>12</td><td>Type in the add-item dialog</td><td>Full word typed, focus stays in the field, modal remains open (regression test after the fix).</td></tr>
+  </table>
+
+  <h3>5.5 Accessibility</h3>
+  <p>
+    The target was WCAG 2.2 AA. Contrast was measured on the rendered tokens rather than assumed:
+    22 of 22 foreground/background pairs pass, with the lowest ratio 6.47:1 against a 4.5:1
+    requirement for body text. Beyond contrast:
+  </p>
+  <ul>
+    <li>Every interactive element is reachable and operable by keyboard, with a visible focus ring that is never removed without a replacement.</li>
+    <li>Dialogs move focus to the first field, trap Tab and Shift+Tab, close on Escape, and return focus to the trigger.</li>
+    <li>Cart totals and order status use <code>aria-live="polite"</code>, so a screen reader announces changes without stealing focus.</li>
+    <li>Icon-only buttons have <code>aria-label</code>; decorative icons are <code>aria-hidden</code>.</li>
+    <li>Form fields are associated with labels and with their error and hint text through <code>aria-describedby</code>.</li>
+    <li>The theme toggle exposes <code>aria-pressed</code>, and motion is disabled under <code>prefers-reduced-motion</code>.</li>
+  </ul>
+
+  <h3>5.6 Responsive and cross-browser</h3>
+  <p>
+    The layout was checked at 390 × 844, 768 × 1024 and 1440 × 900. On a phone the menu becomes a
+    single column, the cart becomes a full-height sheet, and the dashboard board stacks vertically.
+    The app was exercised in Chromium (Edge) with no console errors; because it uses only standard
+    CSS and ES2020 features, it runs unchanged in current Chrome, Firefox and Safari.
+  </p>
+
+  <h3>5.7 Performance</h3>
+  <table>
+    <tr><th style="width:40%">Asset</th><th style="width:20%">Size</th><th>Gzip</th></tr>
+    <tr><td><code>index-*.js</code></td><td>211.12 kB</td><td>67.19 kB</td></tr>
+    <tr><td><code>index-*.css</code></td><td>37.73 kB</td><td>7.96 kB</td></tr>
+    <tr><td><code>index.html</code></td><td>1.70 kB</td><td>0.89 kB</td></tr>
+  </table>
+  <p>
+    There is no client-side state library, no UI kit and no icon package: icons are inline SVG
+    components, and the only runtime dependencies are React, React DOM and the router. Fonts are
+    loaded with <code>display=swap</code> so text is readable before the display face arrives.
+    Images are served by the CDN and are absent from the critical path.
+  </p>
+
+  <h3>5.8 Security testing</h3>
+  <table>
+    <tr><th style="width:44%">Check</th><th>Result</th></tr>
+    <tr><td>Protected endpoint without a token</td><td><code>401 UNAUTHORIZED</code></td></tr>
+    <tr><td>Login with a wrong password</td><td><code>401 INVALID_CREDENTIALS</code>, no field disclosure</td></tr>
+    <tr><td>Request from an origin not in the allowlist</td><td><code>403 CORS_BLOCKED</code></td></tr>
+    <tr><td>Illegal status jump</td><td><code>409 INVALID_TRANSITION</code></td></tr>
+    <tr><td>Delete an item used by an open order</td><td><code>409 ITEM_IN_USE</code></td></tr>
+    <tr><td>Production boot without <code>STAFF_PASSWORD_HASH</code></td><td>Login refused with <code>401</code>; a warning is logged; the known development password is rejected</td></tr>
+    <tr><td>Oversized JSON body</td><td>Rejected at 32 kB by the body parser</td></tr>
+    <tr><td>Credential material in the client bundle</td><td>No password, hash or demo hint present in the production bundle</td></tr>
+  </table>
+
+  <h3>5.9 Defect log</h3>
+  <table>
+    <tr><th style="width:8%">ID</th><th style="width:26%">Defect</th><th style="width:14%">Severity</th><th>Resolution</th></tr>
+    <tr><td>D-01</td><td>Demo credentials displayed on the login screen and documented in the README.</td><td>High (security)</td><td>Hint removed, docs rewritten to require a hash, production fallback disabled and verified with a live 401.</td></tr>
+    <tr><td>D-02</td><td>Menu-item dialog lost focus after the first character, so the next keypress closed it.</td><td>High (usability)</td><td>Effect now depends only on <code>open</code>; focus goes to the first field; Tab trap added; 7-check regression test.</td></tr>
+    <tr><td>D-03</td><td>API rejected the deployed frontend with <code>403 CORS_BLOCKED</code>.</td><td>Medium (deployment)</td><td><code>FRONTEND_URL</code> set to the exact Vercel origin; documented in <code>DEPLOY.md</code>.</td></tr>
+  </table>
+</div>
+
+<!-- ================= 6 DEPLOYMENT ================= -->
+<div class="section">
+  <h2>6. Deployment</h2>
+
+  <h3>6.1 Topology</h3>
+  <table>
+    <tr><th style="width:20%">Component</th><th style="width:26%">Host</th><th>URL / configuration</th></tr>
+    <tr><td>Frontend</td><td>Vercel Hobby</td><td>https://coffee-shop-omega-lovat.vercel.app — root <code>client</code>, <code>npm run build</code>, output <code>dist</code></td></tr>
+    <tr><td>API</td><td>Render Free Web Service</td><td>https://ground-and-grain-api.onrender.com — root <code>server</code>, <code>npm ci</code> → <code>npm start</code></td></tr>
+    <tr><td>Database</td><td>Upstash Redis Free</td><td><code>rediss://…upstash.io:6379</code>, TLS, set only on Render</td></tr>
+    <tr><td>Source</td><td>GitHub</td><td>https://github.com/kabelomoshe881-design/coffee-shop</td></tr>
+  </table>
+
+  <h3>6.2 Environment configuration</h3>
+  <table>
+    <tr><th style="width:32%">Variable</th><th style="width:14%">Where</th><th>Value / purpose</th></tr>
+    <tr><td><code>VITE_API_URL</code></td><td>Vercel</td><td>The Render API base URL. Baked at build time, so changing it requires a redeploy.</td></tr>
+    <tr><td><code>NODE_ENV</code></td><td>Render</td><td><code>production</code> — enables strict CORS and fail-closed auth.</td></tr>
+    <tr><td><code>REDIS_URL</code></td><td>Render</td><td>Upstash TLS connection string.</td></tr>
+    <tr><td><code>FRONTEND_URL</code></td><td>Render</td><td>Exact Vercel origin; must match character for character.</td></tr>
+    <tr><td><code>JWT_SECRET</code></td><td>Render</td><td>Long random string; rotating it invalidates all staff sessions.</td></tr>
+    <tr><td><code>STAFF_USERNAME</code></td><td>Render</td><td><code>staff</code>.</td></tr>
+    <tr><td><code>STAFF_PASSWORD_HASH</code></td><td>Render</td><td>bcrypt hash generated locally with <code>npm run hash</code>. Required in production.</td></tr>
+    <tr><td><code>AUTO_SEED</code></td><td>Render</td><td>Defaults to on; seeds 16 items the first time the API boots against an empty database.</td></tr>
+  </table>
+
+  <h3>6.3 Procedure</h3>
+  <ol>
+    <li>Create the Upstash database and copy the <code>rediss://</code> connection string.</li>
+    <li>Create the Render web service from the repository, root directory <code>server</code>. The included <code>render.yaml</code> blueprint creates it with the right build and start commands.</li>
+    <li>Add the environment variables above. Generate the hash locally; never paste a plaintext password into a dashboard that logs it.</li>
+    <li>Deploy and verify <code>/api/health</code> returns <code>200</code> with <code>"driver":"redis"</code>.</li>
+    <li>Import the repository into Vercel, root directory <code>client</code>, and set <code>VITE_API_URL</code>.</li>
+    <li>Verify the deployed frontend can read the menu and that the API logs no CORS errors.</li>
+    <li>Add a rewrite so deep links resolve: <code>client/vercel.json</code> for Vercel and <code>client/public/_redirects</code> for Netlify.</li>
+  </ol>
+
+  <h3>6.4 Delivery pipeline</h3>
+  <p>
+    Both hosts are connected to <code>main</code>. A push triggers a Vercel build and a Render
+    deploy; there is no manual upload step and no build artefact in the repository. Because the
+    client reads <code>VITE_API_URL</code> at build time, the environment variable and the build
+    are one unit: changing the API URL means committing nothing and pressing redeploy.
+  </p>
+
+  <h3>6.5 Free-tier constraints and mitigations</h3>
+  <table>
+    <tr><th style="width:30%">Constraint</th><th>Mitigation</th></tr>
+    <tr><td>Render sleeps after about 15 minutes of inactivity; the first request can take up to a minute.</td><td>The UI shows a skeleton and a retry action rather than a blank screen. Warm the health URL before a demo. Documented in the README.</td></tr>
+    <tr><td>Single API instance, no horizontal scaling.</td><td>All state is in Redis; the API is stateless apart from the JWT secret, so a restart loses nothing.</td></tr>
+    <tr><td>Ephemeral local disk on the host.</td><td>The file driver is explicitly development-only; production uses Redis, and health reports the driver so a misconfiguration is visible.</td></tr>
+    <tr><td>Upstash free command and storage quotas.</td><td>Indexes avoid <code>KEYS *</code> and every read is proportional to the result, not the database.</td></tr>
+  </table>
+
+  <h3>6.6 Live verification</h3>
+  <p>
+    The deployed system was verified after the final deployment, not assumed from a local build:
+  </p>
+  <table>
+    <tr><th style="width:52%">Check</th><th>Result</th></tr>
+    <tr><td><code>GET /api/health</code></td><td><code>200</code>, <code>"driver":"redis"</code>, <code>"ok":true</code></td></tr>
+    <tr><td>Menu from the deployed API</td><td>16 items</td></tr>
+    <tr><td>Order created through the deployed UI</td><td><code>201</code>, unique <code>ORD-</code> number, confirmation route loads on reload</td></tr>
+    <tr><td>Staff login on the deployed API</td><td><code>200</code>, token issued</td></tr>
+    <tr><td>Staff dashboard with live data</td><td>Orders listed, status advanced, summary revenue correct</td></tr>
+    <tr><td>Production bundle inspection</td><td>No demo hint, no password, no hash</td></tr>
+    <tr><td>Console during the full flow</td><td>Zero errors</td></tr>
+    <tr><td>Persistence across requests</td><td>Order counter incremented and survived subsequent requests</td></tr>
+  </table>
+</div>
+
+<!-- ================= 7 CHALLENGES ================= -->
+<div class="section">
+  <h2>7. Challenges and lessons learned</h2>
+
+  <h3>7.1 CORS is exact, not approximate</h3>
+  <p>
+    The first deployment returned <code>403 CORS_BLOCKED</code> even though the frontend URL
+    "looked right". Origins are compared as exact strings: a trailing slash, <code>http</code>
+    instead of <code>https</code>, or a preview domain is a different origin. The fix was to set
+    <code>FRONTEND_URL</code> to the canonical Vercel domain, with no trailing slash, and to log
+    the rejected origin so the next person does not have to guess. This is now the first entry in
+    the deployment troubleshooting section.
+  </p>
+
+  <h3>7.2 Build-time environment variables</h3>
+  <p>
+    Vite inlines <code>VITE_*</code> at build time. Editing the variable in the Vercel dashboard
+    changes nothing until the project is rebuilt. We lost time to a build that pointed at
+    <code>localhost</code> because the variable was added after the deployment. The README now
+    states this explicitly, and the deployment procedure treats the variable and the redeploy as a
+    single step.
+  </p>
+
+  <h3>7.3 Designing for a key-value store</h3>
+  <p>
+    The instinct from relational databases is to fetch everything and filter in the application.
+    That works at sixteen menu items and fails at sixteen thousand orders. The design forces every
+    access path to be named in advance: an index per status, per day and per category, plus a
+    sorted set for recency. The benefit is not academic — the board, the orders table and the
+    summary are all index reads, and none of them scan the keyspace.
+  </p>
+
+  <h3>7.4 Effects, identity and focus</h3>
+  <p>
+    The dialog bug in Section 4.5 is the clearest lesson of the project. React compares
+    dependencies by identity, and an inline arrow is a new function on every render. The bug was
+    invisible in code review and obvious in a browser; it was found by reproducing the exact user
+    action, not by reading the component. The fix is three lines of intent (a ref, an
+    <code>[open]</code> dependency, a focus selector) and one regression test. The general rule we
+    took away: an effect that manipulates focus must run once per open, never once per render.
+  </p>
+
+  <h3>7.5 Security defaults are a product decision</h3>
+  <p>
+    The original build shipped a demo password so that the project "just worked". That is
+    convenient for a marker and unacceptable for a deployed system: it puts a working credential in
+    the bundle and in the README. Removing it meant changing the documentation, the login screen,
+    the CSS and the server fallback, and then proving the fallback was gone by booting in
+    production mode without a hash and watching the login return <code>401</code>. The lesson is
+    that a secure default is worth more than a convenient one, and that "it works on my machine"
+    is not evidence.
+  </p>
+
+  <h3>7.6 Free-tier reality</h3>
+  <p>
+    A free Render service sleeps, and a sleeping API looks like a broken application. Rather than
+    hide that, the UI treats the first request as potentially slow: skeletons, a retry action and
+    no spinner that runs forever. The deployment guide tells the presenter to warm the health
+    endpoint a minute before the demo. Operational honesty is part of the design.
+  </p>
+
+  <h3>7.7 Secrets hygiene</h3>
+  <p>
+    During development a database connection string and a staff password were shared in a chat
+    window. Both were rotated: the password was replaced by a new bcrypt hash and the connection
+    string was regenerated in Upstash. The repository contains no <code>.env</code> file, only an
+    <code>.env.example</code> with empty secrets, and <code>.gitignore</code> covers the local
+    environment and the file database. This is recorded here deliberately: handling a leak
+    correctly is part of the engineering, not an embarrassment to hide.
+  </p>
+</div>
+
+<!-- ================= 8 CONCLUSION ================= -->
+<div class="section">
+  <h2>8. Conclusion and future work</h2>
+
+  <h3>8.1 Conclusion</h3>
+  <p>
+    The project delivers a working, deployed coffee shop system rather than a prototype. A
+    customer can browse a live menu, build a persistent cart, place an order in four interactions
+    and watch it progress to collection. A barista can sign in, manage availability, work a
+    forward-only queue and see the day's revenue without touching a calculator. Every rule that
+    protects money or state is enforced on the server, every input is validated, and the whole
+    system runs on free infrastructure with durable storage.
+  </p>
+  <p>
+    The objectives in Section 1.3 were met. The nine functional areas are demonstrated in the
+    screenshots and the live URLs; the ten automated tests pass; accessibility was measured rather
+    than asserted; and the production deployment was verified with the same flows a marker will
+    use. The two defects found late — the visible demo password and the self-closing dialog — were
+    fixed at the cause, covered by tests, and documented here.
+  </p>
+
+  <h3>8.2 Future work</h3>
+  <table>
+    <tr><th style="width:30%">Enhancement</th><th>Why it matters and how it would be built</th></tr>
+    <tr><td>Multiple staff accounts and roles</td><td>Barista versus manager permissions; a <code>staff:{id}</code> document, a role claim in the JWT and a permission check per route.</td></tr>
+    <tr><td>Payment</td><td>Card or wallet payment at checkout; a payment intent created server-side and a webhook that moves the order to paid, keeping the API as the source of truth.</td></tr>
+    <tr><td>Notifications</td><td>Email or SMS when an order is ready; a queue worker and a provider webhook, triggered by the status transition.</td></tr>
+    <tr><td>Stock control</td><td>Decrement ingredient quantities per sale and mark items unavailable automatically at zero; the transaction already exists, so this is an extension of it.</td></tr>
+    <tr><td>Analytics</td><td>Revenue by hour and best-selling items; the daily hash is the seed, with a monthly rollup key.</td></tr>
+    <tr><td>Offline-first customer app</td><td>A service worker and an IndexedDB queue so an order can be composed on a weak connection and sent when it returns.</td></tr>
+    <tr><td>Automated end-to-end tests in CI</td><td>Run the Playwright/Puppeteer flows on every pull request, with a disposable Redis container.</td></tr>
+    <tr><td>Image uploads</td><td>Object storage with signed uploads; the menu document stores a URL, never binary data.</td></tr>
+  </table>
+
+  <h3>8.3 Reflection</h3>
+  <p>
+    The most valuable outcome was not the feature list but the discipline the constraints imposed.
+    A key-value store forced the data model to be designed rather than discovered. A free tier
+    forced the UI to be honest about latency. A single staff account forced authorisation to be
+    explicit. And a bug that only appeared when a human typed into a form was a reminder that
+    automated tests verify behaviour you thought of, while acceptance testing finds the behaviour
+    you did not.
+  </p>
+</div>
+
+<!-- ================= REFERENCES ================= -->
+<div class="section">
+  <h2>References</h2>
+  <ol class="small" style="line-height:1.6">
+    <li>Meta Open Source. <em>React — The library for web and native user interfaces</em>. https://react.dev (accessed November 2026).</li>
+    <li>Vite. <em>Vite — Next Generation Frontend Tooling</em>. https://vite.dev (accessed November 2026).</li>
+    <li>OpenJS Foundation. <em>Express — Fast, unopinionated, minimalist web framework for Node.js</em>. https://expressjs.com (accessed November 2026).</li>
+    <li>MDN Web Docs. <em>Fetch API</em>. https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API (accessed November 2026).</li>
+    <li>Redis Ltd. <em>Redis data types — sets, sorted sets and hashes</em>. https://redis.io/docs/latest/develop/data-types/ (accessed November 2026).</li>
+    <li>Upstash. <em>Redis — Serverless Redis</em>. https://upstash.com/docs/redis (accessed November 2026).</li>
+    <li>W3C. <em>Web Content Accessibility Guidelines (WCAG) 2.2</em>. https://www.w3.org/TR/WCAG22/ (accessed November 2026).</li>
+    <li>OWASP Foundation. <em>OWASP Top 10 — 2021</em>. https://owasp.org/www-project-top-ten/ (accessed November 2026).</li>
+    <li>Zod. <em>Zod — TypeScript-first schema validation</em>. https://zod.dev (accessed November 2026).</li>
+    <li>Jones, M., Bradley, J. and Sakimura, N. <em>JSON Web Token (JWT), RFC 7519</em>. IETF, 2015.</li>
+    <li>Provos, N. and Mazières, D. <em>A Future-Adaptable Password Scheme</em>. USENIX Annual Technical Conference, 1999. (bcrypt)</li>
+    <li>Vercel. <em>Deploying a Vite project</em>. https://vercel.com/docs/frameworks/vite (accessed November 2026).</li>
+    <li>Render. <em>Blueprint specification (render.yaml)</em>. https://render.com/docs/blueprint-spec (accessed November 2026).</li>
+  </ol>
+</div>
+
+<!-- ================= APPENDIX A ================= -->
+<div class="section appendix">
+  <h2>Appendix A — API reference</h2>
+  <table>
+    <tr><th style="width:10%">Method</th><th style="width:32%">Endpoint</th><th style="width:12%">Auth</th><th>Success / notable errors</th></tr>
+    <tr><td>GET</td><td><code>/api/health</code></td><td>public</td><td>200 with driver and uptime; 503 if the store is down</td></tr>
+    <tr><td>GET</td><td><code>/api/menu</code></td><td>public</td><td>200, all items</td></tr>
+    <tr><td>GET</td><td><code>/api/menu/:id</code></td><td>public</td><td>200; 404 <code>NOT_FOUND</code></td></tr>
+    <tr><td>POST</td><td><code>/api/menu</code></td><td>staff</td><td>201; 400 <code>VALIDATION_ERROR</code>; 401</td></tr>
+    <tr><td>PUT</td><td><code>/api/menu/:id</code></td><td>staff</td><td>200; 400; 404</td></tr>
+    <tr><td>DELETE</td><td><code>/api/menu/:id</code></td><td>staff</td><td>204; 409 <code>ITEM_IN_USE</code></td></tr>
+    <tr><td>GET</td><td><code>/api/orders</code></td><td>staff</td><td>200; 401</td></tr>
+    <tr><td>GET</td><td><code>/api/orders/summary/today</code></td><td>staff</td><td>200 with count, revenue and by-status</td></tr>
+    <tr><td>GET</td><td><code>/api/orders/:id</code></td><td>public</td><td>200; 404</td></tr>
+    <tr><td>POST</td><td><code>/api/orders</code></td><td>public</td><td>201; 400; 409 <code>ITEM_UNAVAILABLE</code>; 429</td></tr>
+    <tr><td>PATCH</td><td><code>/api/orders/:id/status</code></td><td>staff</td><td>200; 409 <code>INVALID_TRANSITION</code></td></tr>
+    <tr><td>POST</td><td><code>/api/auth/login</code></td><td>public</td><td>200 with token; 401; 429</td></tr>
+  </table>
+
+  <h4>Example — create an order</h4>
+<pre>POST /api/orders
+Content-Type: application/json
+
+{
+  "customerName": "Thabo",
+  "note": "Oat milk, no sugar",
+  "items": [
+    { "itemId": "290f804a-02a3-4d04-ac03-e9c9e8915402", "qty": 2 }
+  ]
+}
+
+201 Created
+{
+  "data": {
+    "id": "a4366e9c-b0be-47e9-899c-ef86a0d8f125",
+    "orderNumber": "ORD-0007",
+    "customerName": "Thabo",
+    "status": "pending",
+    "totalCents": 4400,
+    "items": [
+      { "itemId": "290f804a-…", "name": "Americano", "priceCents": 2200, "qty": 2 }
+    ],
+    "createdAt": "2026-11-10T13:48:00.000Z"
+  }
+}</pre>
+
+  <h4>Example — illegal status transition</h4>
+<pre>PATCH /api/orders/a4366e9c-…/status
+Authorization: Bearer &lt;token&gt;
+
+{ "status": "ready" }
+
+409 Conflict
+{
+  "error": {
+    "code": "INVALID_TRANSITION",
+    "message": "Cannot move an order from \"pending\" to \"ready\". The next step is \"preparing\"."
+  }
+}</pre>
+</div>
+
+<!-- ================= APPENDIX B ================= -->
+<div class="section appendix">
+  <h2>Appendix B — Key-value schema</h2>
+<pre>menu:item:{uuid}            String (JSON)   { id, name, description, priceCents,
+                                              category, available, createdAt, updatedAt }
+menu:index                  Set             all menu item ids
+menu:category:{category}    Set             item ids for one category
+
+order:{uuid}                String (JSON)   { id, orderNumber, customerName, note,
+                                              status, items[], totalCents,
+                                              createdAt, updatedAt }
+orders:index                Sorted set      order id scored by createdAt (ms)
+orders:status:{status}      Set             order ids in one status
+orders:day:{YYYY-MM-DD}     Set             order ids created that day
+stats:day:{YYYY-MM-DD}      Hash            { orderCount, revenueCents }
+counter:order               Integer         INCR source for ORD-0001</pre>
+
+  <h4>Order document</h4>
+<pre>{
+  "id": "a4366e9c-b0be-47e9-899c-ef86a0d8f125",
+  "orderNumber": "ORD-0007",
+  "customerName": "Thabo",
+  "note": "Oat milk, no sugar",
+  "status": "pending",
+  "items": [
+    { "itemId": "290f804a-…", "name": "Americano",
+      "priceCents": 2200, "qty": 2 }
+  ],
+  "totalCents": 4400,
+  "createdAt": "2026-11-10T13:48:00.000Z",
+  "updatedAt": "2026-11-10T13:48:00.000Z"
+}</pre>
+
+  <h4>Index maintenance</h4>
+  <table>
+    <tr><th style="width:30%">Operation</th><th>Keys touched</th></tr>
+    <tr><td>Create menu item</td><td><code>menu:item:{id}</code>, <code>menu:index</code>, <code>menu:category:{cat}</code></td></tr>
+    <tr><td>Update item category</td><td>Document, old category set (remove), new category set (add)</td></tr>
+    <tr><td>Delete item</td><td>Document and both indexes, after the open-order guard</td></tr>
+    <tr><td>Create order</td><td>Document, <code>orders:index</code>, <code>orders:status:pending</code>, <code>orders:day:{d}</code>, <code>stats:day:{d}</code>, <code>counter:order</code> — in one <code>MULTI</code></td></tr>
+    <tr><td>Advance status</td><td>Document, old status set (remove), new status set (add)</td></tr>
+  </table>
+</div>
+
+<!-- ================= APPENDIX C ================= -->
+<div class="section appendix">
+  <h2>Appendix C — Automated test output</h2>
+  <p class="small">Command: <code>cd server &amp;&amp; npm test</code> — Vitest 2.1.8, Node 24.20.0, Windows.</p>
+<pre> RUN  v2.1.8 C:/Users/HP/projects/coffee-shop/server
+
+ ✓ test/api.test.js (10 tests) 466ms
+   ✓ health &gt; reports the store driver
+   ✓ menu &gt; lists seeded items publicly
+   ✓ menu &gt; rejects writes without a token
+   ✓ menu &gt; validates the payload
+   ✓ menu &gt; returns 404 for an unknown item
+   ✓ orders &gt; recomputes totals from server prices
+   ✓ orders &gt; rejects an unavailable item
+   ✓ orders &gt; enforces forward-only status transitions
+   ✓ orders &gt; blocks deleting an item used by an open order
+   ✓ orders &gt; returns a daily summary
+
+ Test Files  1 passed (1)
+      Tests  10 passed (10)
+   Start at  15:47:36
+   Duration  4.65s</pre>
+
+  <h4>Live API evidence</h4>
+  <p class="small">Recorded against the deployed API on 10 November 2026. Full transcript in <code>evidence/api-evidence.txt</code>.</p>
+<pre>200  GET  /api/health                    driver=redis, ok=true
+200  GET  /api/menu                      16 items
+400  POST /api/orders                    validation failure (no items)
+401  GET  /api/orders                    no bearer token
+401  POST /api/auth/login                wrong password
+200  POST /api/auth/login                token issued
+201  POST /api/orders                    order created
+200  GET  /api/orders                    with staff token
+200  GET  /api/orders/summary/today      daily totals
+409  PATCH /api/orders/:id/status        pending -> ready refused
+200  PATCH /api/orders/:id/status        pending -> preparing
+200  GET  /api/orders/:id                public tracking</pre>
+</div>
+
+<!-- ================= APPENDIX D ================= -->
+<div class="section appendix">
+  <h2>Appendix D — Contribution record and repository evidence</h2>
+
+  <p>
+    The ownership map below is taken from <code>docs/contributions.md</code>. Each area maps to real
+    files, so the split can be checked against the repository rather than accepted on trust.
+  </p>
+  <table>
+    <tr><th style="width:24%">Member</th><th style="width:16%">Student number</th><th style="width:30%">Primary ownership</th><th>Files</th></tr>
+    <tr><td><em>Name 1</em></td><td><em>00000000</em></td><td>Backend API and data model</td><td><code>server/src/**</code>, <code>server/test/**</code></td></tr>
+    <tr><td><em>Name 2</em></td><td><em>00000000</em></td><td>Customer experience</td><td><code>MenuPage</code>, <code>MenuCard</code>, <code>CartDrawer</code>, <code>ConfirmPage</code>, <code>CartContext</code></td></tr>
+    <tr><td><em>Name 3</em></td><td><em>00000000</em></td><td>Staff dashboard and auth</td><td><code>StaffLogin</code>, <code>StaffDashboard</code>, <code>AuthContext</code>, <code>ui.jsx</code></td></tr>
+    <tr><td><em>Name 4</em></td><td><em>00000000</em></td><td>Design system, docs, deployment</td><td><code>design-system/**</code>, <code>styles/**</code>, <code>README.md</code>, <code>docs/**</code></td></tr>
+  </table>
+
+  <h4>Repository state at submission</h4>
+<pre>git log --oneline --graph --all
+
+* 2f6deb4 fix: keep focus in modal fields and trap tab
+* 946d227 fix: remove demo credentials and fail closed without a staff password hash
+* 40e8b9a docs: add live deployment URLs
+* 8efc1a0 chore: add deployment blueprint, guide and auto-seed on boot
+* c19b02d chore: initial scaffold for Ground &amp; Grain coffee shop system</pre>
+
+  <div class="callout">
+    <strong>Action before submission.</strong> The repository currently has a single author. To
+    evidence collaboration, each member should create their own branch, make at least one
+    meaningful commit in their area, push it, and open a pull request reviewed by a different
+    member. The exact commands are in <code>docs/contributions.md</code>, and the proof commands
+    are:
+    <code>git shortlog -sn --all</code>, <code>git log --graph --all</code> and
+    <code>gh pr list --state all</code>. Append the output to this appendix after the pull
+    requests are merged.
+  </div>
+</div>
+
+<!-- ================= APPENDIX E ================= -->
+<div class="section appendix">
+  <h2>Appendix E — Screenshot index</h2>
+  <p class="small">
+    All screenshots were captured from the deployed application at
+    https://coffee-shop-omega-lovat.vercel.app on 10 November 2026, not from a local build.
+    Files are in <code>submission/screenshots/</code>.
+  </p>
+  <table>
+    <tr><th style="width:32%">File</th><th>Shows</th></tr>
+    <tr><td><code>01-menu-light.png</code></td><td>Customer menu, light theme, 1440 × 900</td></tr>
+    <tr><td><code>02-menu-search.png</code></td><td>Search filtering the menu</td></tr>
+    <tr><td><code>03-cart.png</code></td><td>Cart drawer with quantities and checkout form</td></tr>
+    <tr><td><code>04-confirmation.png</code></td><td>Order confirmation and status tracker</td></tr>
+    <tr><td><code>05-staff-login.png</code></td><td>Staff sign-in screen</td></tr>
+    <tr><td><code>06-dashboard-overview.png</code></td><td>Daily totals and live order board</td></tr>
+    <tr><td><code>07-dashboard-orders.png</code></td><td>Orders table with status actions</td></tr>
+    <tr><td><code>08-dashboard-menu.png</code></td><td>Menu management list</td></tr>
+    <tr><td><code>09-menu-editor.png</code></td><td>Add-item dialog with focus in the name field</td></tr>
+    <tr><td><code>10-menu-dark.png</code></td><td>Dark theme</td></tr>
+    <tr><td><code>11-mobile-menu.png</code></td><td>Menu at 390 × 844</td></tr>
+    <tr><td><code>12-mobile-cart.png</code></td><td>Cart sheet at 390 × 844</td></tr>
+  </table>
+
+  <div class="fig-row">
+    <figure>
+      <img src="screenshots/04-confirmation.png" alt="Order confirmation page">
+      <figcaption>Figure 4 — Confirmation with a shareable URL and live status.</figcaption>
+    </figure>
+    <figure>
+      <img src="screenshots/07-dashboard-orders.png" alt="Staff orders table">
+      <figcaption>Figure 5 — Orders table with one-click status advancement.</figcaption>
+    </figure>
+  </div>
+  <div class="fig-row">
+    <figure>
+      <img src="screenshots/10-menu-dark.png" alt="Menu in dark theme">
+      <figcaption>Figure 6 — Dark theme driven by the same tokens.</figcaption>
+    </figure>
+    <figure>
+      <img src="screenshots/11-mobile-menu.png" alt="Menu on a phone">
+      <figcaption>Figure 7 — Menu at 390 px.</figcaption>
+    </figure>
+  </div>
+</div>
+
+<!-- ================= APPENDIX F ================= -->
+<div class="section appendix">
+  <h2>Appendix F — Viva preparation</h2>
+  <p class="small">
+    Each member should be able to answer for their own area. These are the questions most likely to
+    be asked, with the answer in one sentence and the place in the code to point at.
+  </p>
+
+  <h4>Backend and data model</h4>
+  <table>
+    <tr><th style="width:44%">Question</th><th>Answer</th></tr>
+    <tr><td>Why key-value rather than relational?</td><td>The brief requires it; the design compensates by writing index sets at write time, so listing is a set read, not a scan.</td></tr>
+    <tr><td>How do you filter without <code>WHERE</code>?</td><td>Every filter that the UI offers has a pre-maintained index: category sets for the menu, status and day sets for orders.</td></tr>
+    <tr><td>Why integer cents?</td><td>Floating point cannot represent most decimal cents exactly, so totals are summed as integers and formatted once at the edge.</td></tr>
+    <tr><td>What if the server dies mid-order?</td><td>The document and all indexes are written in one <code>MULTI</code>, so the order either exists everywhere or nowhere.</td></tr>
+    <tr><td>Where is the status rule enforced?</td><td>In the orders repository on the server; the UI only reflects it, because a browser rule can be bypassed.</td></tr>
+  </table>
+
+  <h4>Customer frontend</h4>
+  <table>
+    <tr><th style="width:44%">Question</th><th>Answer</th></tr>
+    <tr><td>How does the cart survive a refresh?</td><td><code>CartContext</code> writes lines to <code>localStorage</code> and rehydrates them on boot.</td></tr>
+    <tr><td>Where does the total come from?</td><td>The server recalculates it from current prices; the client total is display only and is never trusted.</td></tr>
+    <tr><td>How does confirmation know the order is ready?</td><td>It polls <code>GET /api/orders/:id</code> every ten seconds and stops at <em>collected</em>.</td></tr>
+    <tr><td>Why a real route for confirmation?</td><td>So the page can be reloaded and shared, which a modal-only state cannot.</td></tr>
+  </table>
+
+  <h4>Staff dashboard</h4>
+  <table>
+    <tr><th style="width:44%">Question</th><th>Answer</th></tr>
+    <tr><td>How is a <code>401</code> handled mid-session?</td><td><code>AuthContext</code> clears the token and returns to login; no page handles it individually.</td></tr>
+    <tr><td>Why silent background refresh?</td><td>First load shows a skeleton; later polls update data without unmounting the board and losing scroll or focus.</td></tr>
+    <tr><td>What if you delete an item in an open order?</td><td>The server refuses with <code>409 ITEM_IN_USE</code>, so a receipt can never reference a missing item.</td></tr>
+    <tr><td>Why buttons rather than drag-and-drop?</td><td>Buttons are reliable on touch and keyboard and give one unambiguous next action.</td></tr>
+  </table>
+
+  <h4>Design, docs and deployment</h4>
+  <table>
+    <tr><th style="width:44%">Question</th><th>Answer</th></tr>
+    <tr><td>Why these colours and typefaces?</td><td>Warm brown on cream reads as coffee without cliché; Playfair gives the brand voice, Karla keeps the UI legible at small sizes.</td></tr>
+    <tr><td>How is contrast handled in dark mode?</td><td>Dark mode is a separate token block, and both blocks were measured: 22/22 pairs pass AA, lowest 6.47:1.</td></tr>
+    <tr><td>What breaks on a free tier?</td><td>The API sleeps after inactivity, so the first request is slow; the UI shows a skeleton and the README says to warm it before a demo.</td></tr>
+    <tr><td>What would you do differently?</td><td>Add end-to-end tests to CI, rotate secrets from day one, and design the index strategy before writing the repositories.</td></tr>
+  </table>
+</div>
+
+</body>
+</html>

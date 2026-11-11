@@ -1,0 +1,488 @@
+Ground & Grain - live API evidence
+Generated: 2026-11-10T13:48:00.552Z
+API: https://ground-and-grain-api.onrender.com
+
+Menu items returned: 16
+
+### GET /api/health
+HTTP 200
+{
+  "status": "ok",
+  "service": "coffee-shop-api",
+  "uptimeSeconds": 1211,
+  "timestamp": "2026-11-10T13:47:55.048Z",
+  "dependencies": {
+    "store": {
+      "driver": "redis",
+      "ok": true
+    }
+  }
+}
+
+### GET /api/menu
+HTTP 200
+{
+  "data": [
+    {
+      "id": "6aad3f34-1c31-486d-a03d-483b963ea3a4",
+      "name": "Almond Danish",
+      "description": "Frangipane and toasted almonds.",
+      "priceCents": 3400,
+      "category": "pastry",
+      "available": true,
+      "createdAt": "2026-11-10T11:44:19.196Z",
+      "updatedAt": "2026-11-10T11:44:19.196Z"
+    },
+    {
+      "id": "290f804a-02a3-4d04-ac03-e9c9e8915402",
+      "name": "Americano",
+      "description": "Double espresso lengthened with hot water.",
+      "priceCents": 2200,
+      "category": "coffee",
+      "available": true,
+      "createdAt": "2026-11-10T11:44:17.346Z",
+      "updatedAt": "2026-11-10T11:44:17.346Z"
+    },
+    {
+      "id": "ca753e60-26c2-4742-8338-e2fadbdba4d1",
+      "name": "Banana Bread",
+      "description": "Toasted slice with salted butter.",
+      "priceCents": 3000,
+      "category": "other",
+      "available": true,
+      "createdAt": "2026-11-10T11:44:19.505Z",
+      "updatedAt": "2026-11-10T11:44:19.505Z"
+    },
+    {
+      "id": "96bcca1d-7420-41cb-a3d9-aa203c726951",
+      "name": "Blueberry Muffin",
+      "description": "Bursting with berries, crumble top.",
+      "priceCents": 2600,
+      "category": "pastry",
+      "available": true,
+      "createdAt": "2026-11-10T11:44:19.042Z",
+      "updatedAt": "2026-11-10T11:44:19.042Z"
+    },
+    {
+      "id": "5934110c-3af4-4461-8b60-cec44b13f0bb",
+      "name": "Breakfast Bagel",
+      "description": "Cream cheese, tomato and rocket.",
+      "priceCents": 4800,
+      "category": "other",
+      "available": true,
+      "createdAt": "2026-11-10T11:44:19.350Z",
+      "updatedAt": "2026-11-10T11:44:19.350Z"
+    },
+    {
+      "id": "35e5ce22-df56-4af1-9a93-8e81de20017d",
+      "name": "Butter Croissant",
+      "description": "Laminated 27 layers, baked this morning.",
+      "priceCents": 2800,
+      "category": "pastry",
+      "available": true,
+      "createdAt": "2026-11-10T11:44:18.734Z",
+      "updatedAt": "2026-11-10T11:44:18.734Z"
+    },
+    {
+      "id": "fb5cd2c5-3073-4d77-b431-e7c09f1b268d",
+      "name": "Caffe Latte",
+      "description": "Smooth espresso with plenty of steamed milk.",
+      "priceCents": 3300,
+      "category": "coffee",
+      "available": true,
+      "createdAt": "2026-11-10T11:44:17.809Z",
+      "updatedAt": "2026-11-10T11:44:17.809Z"
+    },
+    {
+      "id": "2ca54f18-c419-4de5-9833-f54977e62600",
+      "name": "Cappuccino",
+      "description": "Espresso, steamed milk and a deep foam cap.",
+      "priceCents": 3200,
+      "category": "coffee",
+      "available": true,
+      "createdAt": "2026-11-10T11:44:17.501Z",
+      "updatedAt": "2026-11-10T11:44:17.501Z"
+    },
+    {
+      "id": "16700d09-91b1-4dd2-b5ef-da3093109d41",
+      "name": "Chai Latte",
+      "description": "Spiced black tea with steamed milk.",
+      "priceCents": 3500,
+      "category": "tea",
+      "available": true,
+      "createdAt": "2026-11-10T11:44:18.426Z",
+      "updatedAt": "2026-11-10T11:44:18.426Z"
+    },
+    {
+      "id": "b1c56f23-3f31-4df9-95c7-c76a6765264b",
+      "name": "Chocolate Croissant",
+      "description": "Butter croissant filled with dark chocolate.",
+      "priceCents": 3200,
+      "category": "pastry",
+      "available": true,
+      "createdAt": "2026-11-10T11:44:18.888Z",
+      "updatedAt": "2026-11-10T11:44:18.888Z"
+    },
+    {
+      "id": "f9da18b2-c52e-4adc-9367-429c5c6afef0",
+      "name": "Cold Brew",
+      "description": "Steeped for 18 hours, served over ice.",
+      "priceCents": 3600,
+      "category": "coffee",
+      "available": true,
+      "createdAt": "2026-11-10T11:44:18.117Z",
+      "updatedAt": "2026-11-10T11:44:18.117Z"
+    },
+    {
+      "id": "e47b807c-eda8-4eed-998a-a3ed9480eb7c",
+      "name": "Espresso",
+      "description": "Double shot, house blend, served short and hot.",
+      "priceCents": 1800,
+      "category": "coffee",
+      "available": true,
+      "createdAt": "2026-11-10T11:44:17.190Z",
+      "updatedAt": "2026-11-10T11:44:17.190Z"
+    },
+    {
+      "id": "98951fa8-8632-4df4-a1ff-7cec35571de6",
+      "name": "Flat White",
+      "description": "Ristretto shots with silky micro-foam.",
+      "priceCents": 3400,
+      "category": "coffee",
+      "available": true,
+      "createdAt": "2026-11-10T11:44:17.655Z",
+      "updatedAt": "2026-11-10T11:44:17.655Z"
+    },
+    {
+      "id": "c6dec633-edd2-422f-986f-f8eb0b864bd2",
+      "name": "Jasmine Green Tea",
+      "description": "Delicate jasmine-scented green tea.",
+      "priceCents": 2400,
+      "category": "tea",
+      "available": true,
+      "createdAt": "2026-11-10T11:44:18.580Z",
+      "updatedAt": "2026-11-10T11:44:18.580Z"
+    },
+    {
+      "id": "9e0a8490-6834-4c71-924b-bc5c57a5f989",
+      "name": "Mocha",
+      "description": "Espresso, dark chocolate and steamed milk.",
+      "priceCents": 3800,
+      "category": "coffee",
+      "available": true,
+      "createdAt": "2026-11-10T11:44:17.963Z",
+      "updatedAt": "2026-11-10T11:44:17.963Z"
+    },
+    {
+      "id": "b4804488-be84-4af9-87a3-999f275dcf5c",
+      "name": "Rooibos Tea",
+      "description": "Loose-leaf rooibos, brewed to order.",
+      "priceCents": 2000,
+      "category": "tea",
+      "available": true,
+      "createdAt": "2026-11-10T11:44:18.271Z",
+      "updatedAt": "2026-11-10T11:44:18.271Z"
+    }
+  ],
+  "count": 16
+}
+
+### POST /api/orders - validation failure (no items)
+HTTP 400
+{
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "message": "Some fields are invalid",
+    "details": [
+      {
+        "field": "customerName",
+        "message": "Tell us who the order is for"
+      },
+      {
+        "field": "items",
+        "message": "Add at least one item to the order"
+      }
+    ]
+  }
+}
+
+### GET /api/orders - no bearer token
+HTTP 401
+{
+  "error": {
+    "code": "UNAUTHORIZED",
+    "message": "A staff bearer token is required"
+  }
+}
+
+### POST /api/auth/login - wrong password
+HTTP 401
+{
+  "error": {
+    "code": "INVALID_CREDENTIALS",
+    "message": "Username or password is incorrect"
+  }
+}
+
+### POST /api/auth/login - success
+HTTP 200
+{
+  "data": {
+    "token": "eyJhbGciOiJIUzI1NiIsInR5...",
+    "staff": {
+      "username": "staff"
+    }
+  }
+}
+
+### POST /api/orders - create order
+HTTP 201
+{
+  "data": {
+    "id": "6c6a1d8c-739d-46d2-ab3d-3a17ee54ec22",
+    "orderNumber": "ORD-0006",
+    "customerName": "Submission Evidence",
+    "note": "Created by the submission evidence script",
+    "items": [
+      {
+        "itemId": "6aad3f34-1c31-486d-a03d-483b963ea3a4",
+        "name": "Almond Danish",
+        "priceCents": 3400,
+        "qty": 2,
+        "lineTotalCents": 6800
+      }
+    ],
+    "totalCents": 6800,
+    "status": "pending",
+    "createdAt": "2026-11-10T13:47:58.054Z",
+    "updatedAt": "2026-11-10T13:47:58.054Z"
+  }
+}
+
+### GET /api/orders - with staff token
+HTTP 200
+{
+  "data": [
+    {
+      "id": "6c6a1d8c-739d-46d2-ab3d-3a17ee54ec22",
+      "orderNumber": "ORD-0006",
+      "customerName": "Submission Evidence",
+      "note": "Created by the submission evidence script",
+      "items": [
+        {
+          "itemId": "6aad3f34-1c31-486d-a03d-483b963ea3a4",
+          "name": "Almond Danish",
+          "priceCents": 3400,
+          "qty": 2,
+          "lineTotalCents": 6800
+        }
+      ],
+      "totalCents": 6800,
+      "status": "pending",
+      "createdAt": "2026-11-10T13:47:58.054Z",
+      "updatedAt": "2026-11-10T13:47:58.054Z"
+    },
+    {
+      "id": "a4366e9c-b0be-47e9-899c-ef86a0d8f125",
+      "orderNumber": "ORD-0005",
+      "customerName": "Sipho Mahlangu",
+      "note": "",
+      "items": [
+        {
+          "itemId": "6aad3f34-1c31-486d-a03d-483b963ea3a4",
+          "name": "Almond Danish",
+          "priceCents": 3400,
+          "qty": 2,
+          "lineTotalCents": 6800
+        },
+        {
+          "itemId": "ca753e60-26c2-4742-8338-e2fadbdba4d1",
+          "name": "Banana Bread",
+          "priceCents": 3000,
+          "qty": 1,
+          "lineTotalCents": 3000
+        }
+      ],
+      "totalCents": 9800,
+      "status": "pending",
+      "createdAt": "2026-11-10T13:46:34.734Z",
+      "updatedAt": "2026-11-10T13:46:34.734Z"
+    },
+    {
+      "id": "0e1f2c18-6b94-4fb6-b043-0866725fc929",
+      "orderNumber": "ORD-0004",
+      "customerName": "Tiisetso",
+      "note": "No sugar",
+      "items": [
+        {
+          "itemId": "6aad3f34-1c31-486d-a03d-483b963ea3a4",
+          "name": "Almond Danish",
+          "priceCents": 3400,
+          "qty": 1,
+          "lineTotalCents": 3400
+        },
+        {
+          "itemId": "290f804a-02a3-4d04-ac03-e9c9e8915402",
+          "name": "Americano",
+          "priceCents": 2200,
+          "qty": 1,
+          "lineTotalCents": 2200
+        },
+        {
+          "itemId": "5934110c-3af4-4461-8b60-cec44b13f0bb",
+          "name": "Breakfast Bagel",
+          "priceCents": 4800,
+          "qty": 1,
+          "lineTotalCents": 4800
+        }
+      ],
+      "totalCents": 10400,
+      "status": "collected",
+      "createdAt": "2026-11-10T12:40:01.366Z",
+      "updatedAt": "2026-11-10T12:41:36.210Z"
+    },
+    {
+      "id": "855d36b1-0b5f-47c5-ac2e-8d4825adf809",
+      "orderNumber": "ORD-0003",
+      "customerName": "Persistence Probe",
+      "note": "",
+      "items": [
+        {
+          "itemId": "6aad3f34-1c31-486d-a03d-483b963ea3a4",
+          "name": "Almond Danish",
+          "priceCents": 3400,
+          "qty": 1,
+          "lineTotalCents": 3400
+        }
+      ],
+      "totalCents": 3400,
+      "status": "preparing",
+      "createdAt": "2026-11-10T12:20:01.036Z",
+      "updatedAt": "2026-11-10T12:33:41.296Z"
+    },
+    {
+      "id": "b9e72d97-a714-42e3-9604-60f346ec002d",
+      "orderNumber": "ORD-0002",
+      "customerName": "Route Check",
+      "note": "",
+      "items": [
+        {
+          "itemId": "6aad3f34-1c31-486d-a03d-483b963ea3a4",
+          "name": "Almond Danish",
+          "priceCents": 3400,
+          "qty": 1,
+          "lineTotalCents": 3400
+        }
+      ],
+      "totalCents": 3400,
+      "status": "preparing",
+      "createdAt": "2026-11-10T12:18:25.579Z",
+      "updatedAt": "2026-11-10T12:42:06.313Z"
+    },
+    {
+      "id": "fac69e40-0ee8-4ebd-8a53-c57346b7e5e8",
+      "orderNumber": "ORD-0001",
+      "customerName": "Deployment Check",
+      "note": "live deployment verification",
+      "items": [
+        {
+          "itemId": "6aad3f34-1c31-486d-a03d-483b963ea3a4",
+          "name": "Almond Danish",
+          "priceCents": 3400,
+          "qty": 1,
+          "lineTotalCents": 3400
+        },
+        {
+          "itemId": "290f804a-02a3-4d04-ac03-e9c9e8915402",
+          "name": "Americano",
+          "priceCents": 2200,
+          "qty": 1,
+          "lineTotalCents": 2200
+        }
+      ],
+      "totalCents": 5600,
+      "status": "pending",
+      "createdAt": "2026-11-10T12:17:57.877Z",
+      "updatedAt": "2026-11-10T12:17:57.877Z"
+    }
+  ],
+  "count": 6
+}
+
+### GET /api/orders/summary/today
+HTTP 200
+{
+  "data": {
+    "date": "2026-11-10",
+    "orderCount": 6,
+    "revenueCents": 39400,
+    "byStatus": {
+      "pending": 3,
+      "preparing": 2,
+      "ready": 0,
+      "collected": 1
+    }
+  }
+}
+
+### PATCH /api/orders/:id/status - illegal jump pending -> ready
+HTTP 409
+{
+  "error": {
+    "code": "INVALID_TRANSITION",
+    "message": "Cannot move an order from \"pending\" to \"ready\"",
+    "details": {
+      "allowed": [
+        "preparing"
+      ]
+    }
+  }
+}
+
+### PATCH /api/orders/:id/status - pending -> preparing
+HTTP 200
+{
+  "data": {
+    "id": "6c6a1d8c-739d-46d2-ab3d-3a17ee54ec22",
+    "orderNumber": "ORD-0006",
+    "customerName": "Submission Evidence",
+    "note": "Created by the submission evidence script",
+    "items": [
+      {
+        "itemId": "6aad3f34-1c31-486d-a03d-483b963ea3a4",
+        "name": "Almond Danish",
+        "priceCents": 3400,
+        "qty": 2,
+        "lineTotalCents": 6800
+      }
+    ],
+    "totalCents": 6800,
+    "status": "preparing",
+    "createdAt": "2026-11-10T13:47:58.054Z",
+    "updatedAt": "2026-11-10T13:48:00.212Z"
+  }
+}
+
+### GET /api/orders/:id - public tracking
+HTTP 200
+{
+  "data": {
+    "id": "6c6a1d8c-739d-46d2-ab3d-3a17ee54ec22",
+    "orderNumber": "ORD-0006",
+    "customerName": "Submission Evidence",
+    "note": "Created by the submission evidence script",
+    "items": [
+      {
+        "itemId": "6aad3f34-1c31-486d-a03d-483b963ea3a4",
+        "name": "Almond Danish",
+        "priceCents": 3400,
+        "qty": 2,
+        "lineTotalCents": 6800
+      }
+    ],
+    "totalCents": 6800,
+    "status": "preparing",
+    "createdAt": "2026-11-10T13:47:58.054Z",
+    "updatedAt": "2026-11-10T13:48:00.212Z"
+  }
+}

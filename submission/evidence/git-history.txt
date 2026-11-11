@@ -1,0 +1,117 @@
+Ground & Grain - repository evidence
+Generated: 2026-11-10 15:47
+Repository: https://github.com/kabelomoshe881-design/coffee-shop
+
+== git log --oneline --graph --all ==
+* 2f6deb4 fix: keep focus in modal fields and trap tab
+* 946d227 fix: remove demo credentials and fail closed without a staff password hash
+* 40e8b9a docs: add live deployment URLs
+* 8efc1a0 chore: add deployment blueprint, guide and auto-seed on boot
+* c19b02d chore: initial scaffold for Ground & Grain coffee shop system
+
+== git shortlog -sn --all ==
+     5	kabelomoshe881-design
+
+== git log --format='%h %an %s' --no-merges ==
+2f6deb4 kabelomoshe881-design fix: keep focus in modal fields and trap tab
+946d227 kabelomoshe881-design fix: remove demo credentials and fail closed without a staff password hash
+40e8b9a kabelomoshe881-design docs: add live deployment URLs
+8efc1a0 kabelomoshe881-design chore: add deployment blueprint, guide and auto-seed on boot
+c19b02d kabelomoshe881-design chore: initial scaffold for Ground & Grain coffee shop system
+
+== git branch -a ==
+* main
+  remotes/origin/main
+
+== files changed per commit ==
+--- 2f6deb4 fix: keep focus in modal fields and trap tab
+
+M	client/src/components/CartDrawer.jsx
+M	client/src/components/ui.jsx
+--- 946d227 fix: remove demo credentials and fail closed without a staff password hash
+
+M	DEPLOY.md
+M	README.md
+M	client/src/pages/StaffLogin.jsx
+M	client/src/styles/app.css
+M	docs/api.md
+M	server/.env.example
+M	server/src/config.js
+M	server/src/middleware/auth.js
+--- 40e8b9a docs: add live deployment URLs
+
+M	README.md
+--- 8efc1a0 chore: add deployment blueprint, guide and auto-seed on boot
+
+A	DEPLOY.md
+M	README.md
+M	client/vercel.json
+A	render.yaml
+M	server/.env.example
+M	server/src/config.js
+A	server/src/data/menu-seed.js
+M	server/src/index.js
+M	server/src/seed.js
+--- c19b02d chore: initial scaffold for Ground & Grain coffee shop system
+
+A	.gitignore
+A	README.md
+A	client/.env.example
+A	client/index.html
+A	client/package-lock.json
+A	client/package.json
+A	client/public/_redirects
+A	client/src/App.jsx
+A	client/src/api.js
+A	client/src/components/CartDrawer.jsx
+A	client/src/components/Header.jsx
+A	client/src/components/Icons.jsx
+A	client/src/components/MenuCard.jsx
+A	client/src/components/ui.jsx
+A	client/src/context/AuthContext.jsx
+A	client/src/context/CartContext.jsx
+A	client/src/context/ToastContext.jsx
+A	client/src/lib/format.js
+A	client/src/lib/useTheme.js
+A	client/src/main.jsx
+A	client/src/pages/ConfirmPage.jsx
+A	client/src/pages/MenuPage.jsx
+A	client/src/pages/StaffDashboard.jsx
+A	client/src/pages/StaffLogin.jsx
+A	client/src/styles/app.css
+A	client/src/styles/tokens.css
+A	client/vercel.json
+A	client/vite.config.js
+A	design-system/ground-and-grain/MASTER.md
+A	design-system/ground-and-grain/pages/cart.md
+A	design-system/ground-and-grain/pages/dashboard.md
+A	design-system/ground-and-grain/pages/menu.md
+A	docs/api.md
+A	docs/contributions.md
+A	docs/data-model.md
+A	docs/screenshots/cart.png
+A	docs/screenshots/confirmation.png
+A	docs/screenshots/dashboard.png
+A	docs/screenshots/menu-dark.png
+A	docs/screenshots/menu-mobile.png
+A	docs/screenshots/menu.png
+A	server/.env.example
+A	server/package-lock.json
+A	server/package.json
+A	server/scripts/hash-password.js
+A	server/src/app.js
+A	server/src/config.js
+A	server/src/index.js
+A	server/src/middleware/auth.js
+A	server/src/middleware/errors.js
+A	server/src/repositories/menu.js
+A	server/src/repositories/orders.js
+A	server/src/routes/auth.js
+A	server/src/routes/health.js
+A	server/src/routes/menu.js
+A	server/src/routes/orders.js
+A	server/src/schemas.js
+A	server/src/seed.js
+A	server/src/store/file.js
+A	server/src/store/redis.js
+A	server/test/api.test.js

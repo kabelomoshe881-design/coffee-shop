@@ -1,0 +1,5 @@
+# Generated artefacts — rebuild with python submission/make_zips.py
+*.zip
+
+# The PDF is a convenience copy of the DOCX
+report-preview.pdf
