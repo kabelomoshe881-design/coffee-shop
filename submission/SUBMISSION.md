@@ -52,15 +52,14 @@ These are the only things still outstanding. Nothing else is blocking.
 ### 3.1 Fill in the placeholders (required)
 
 The report is laid out for **five members**. Each one appears as `[ full name ]` and
-`[ student number ]` in brown text in three places:
+`[ student number ]` in brown text in two places:
 
 1. the **cover page** table,
-2. the **Declaration** signature table (five blank signature rows),
-3. **section 1.4**, the ownership map.
+2. **section 1.4**, the ownership map.
 
 Open the DOCX in Word, use Find (`Ctrl+F`) for `[ full name ]`, and replace each one. Then
 do the same for `[ student number ]`. If your group has fewer than five members, delete the
-spare rows from all three tables so the numbers agree; if you have more, add rows.
+spare rows from both tables so the numbers agree; if you have more, add rows.
 
 Also check the **contribution area** column on the cover and in section 1.4 against who
 actually did what. If the split changed, change both and `docs/contributions.md` together so
@@ -136,14 +135,14 @@ Then open the live site once, place an order, log in as staff, and move that ord
 
 ## 4. What the report contains
 
-20 pages, 6,554 words including tables and appendices. 16 tables, 3 figures.
+20 pages, 6,449 words including tables and appendices. 15 tables, 3 figures.
 
 | Part | Content |
 |------|---------|
 | Cover | Title, module, live URLs, repository, five-member group table |
-| Declaration | Own-work statement, signature table, note on AI-assisted tools |
+| Page 2 | Note on AI-assisted tools (the Declaration page was removed at the group's request) |
 | Abstract | Problem, solution, method, result |
-| Contents | Word field, already populated; `F9` to refresh |
+| Contents | Plain text with fixed page numbers; no field to update |
 | 1. Introduction | Background, problem statement, seven objectives, scope, group roles |
 | 2. Requirements | Personas, 14 functional and 9 non-functional requirements, constraints |
 | 3. Design | Architecture, key-value data model, API design, order lifecycle, security, interface design |
@@ -171,7 +170,7 @@ Taken from section 10 of the brief.
 | Menu and order management functionality | 15 | Section 3.4 (forward-only status workflow), 4.2 (repositories, price snapshotting, `ITEM_IN_USE` guard); staff dashboard screenshots 06–09 |
 | GitHub collaboration and code quality | 10 | `docs/contributions.md`, section 1.4, `git-history.txt`; **one author in the history at present — see 3.3** |
 | Deployment and testing | 10 | Section 5 (tests, scenarios, defects), 6 (three hosts, env vars, live verification); live URLs in section 2 |
-| Students Own Work | 5 | Declaration (including the note on AI-assisted tools), section 1.4 (how the work was divided) |
+| Students Own Work | 5 | Note on AI-assisted tools (page 2), section 1.4 (how the work was divided) |
 
 ---
 
@@ -233,7 +232,7 @@ stay in step, then run the two passes:
 ```bash
 python submission/build_docx.py            # first pass: measure
 # open in Word, note the page count and word count, and check the contents page
-python submission/build_docx.py 20 6554    # second pass: real total and word count
+python submission/build_docx.py 20 6449    # second pass: real total and word count
 # then in Word: save, and export the PDF
 ```
 

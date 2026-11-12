@@ -201,7 +201,6 @@ def add_numpages_field(paragraph):
 # so the page numbers are fixed here and checked against the exported PDF by
 # verify.py after every build.
 TOC_ENTRIES = [
-    ("Declaration", 2),
     ("Abstract", 3),
     ("1. Introduction", 5),
     ("2. Requirements", 6),
@@ -659,55 +658,13 @@ wc_run = wordcount.add_run("Word count: ")
 _set_run_font(wc_run, BODY_FONT, 8.5, color=MUTED)
 
 # --------------------------------------------------------------------------
-# DECLARATION
+# PAGE 2 — NOTE ON AI-ASSISTED TOOLS
 # --------------------------------------------------------------------------
+# The Declaration page was removed at the group's request. Page 2 now carries
+# only this note; the explicit break keeps it off the cover page.
 
 doc.add_page_break()
 FIRST_H1[0] = False
-
-h1("Declaration", new_page=False)
-p(
-    "We declare that this report and the application it describes are our own work. "
-    "Where we used someone else's code, documentation or idea, we say so in the text or "
-    "in the reference list. We have not copied another group's project, and we have not "
-    "submitted this work for another module."
-)
-p(
-    "We also declare that the live application at the URL on the cover page was built from "
-    "the source code in the repository listed there. The screenshots in this report were "
-    "taken from that deployment, not from a local copy."
-)
-
-sign = doc.add_table(rows=1, cols=3)
-sign.style = "Table Grid"
-sign.autofit = False
-_cell_margins(sign)
-for i, text in enumerate(("Name and surname", "Student number", "Signature")):
-    cell = sign.rows[0].cells[i]
-    _cell_shading(cell, "F3EAD9")
-    cell.width = Cm(7.0 if i == 0 else 4.4 if i == 1 else 5.0)
-    par = cell.paragraphs[0]
-    par.paragraph_format.space_after = Pt(0)
-    run = par.add_run(text)
-    _set_run_font(run, BODY_FONT, 8.6, bold=True)
-
-for _ in range(5):
-    cells = sign.add_row().cells
-    for i in range(3):
-        cells[i].text = ""
-        cells[i].width = Cm(7.0 if i == 0 else 4.4 if i == 1 else 5.0)
-        par = cells[i].paragraphs[0]
-        par.paragraph_format.space_after = Pt(8)
-        run = par.add_run(" ")
-        _set_run_font(run, BODY_FONT, 8.6)
-
-for row in sign.rows:
-    row.cells[0].width = Cm(7.0)
-    row.cells[1].width = Cm(4.4)
-    row.cells[2].width = Cm(5.0)
-_fixed_layout(sign, 16.4)
-
-p("Signed at ____________________________ on ____________________.", space_before=14)
 
 h2("Note on AI-assisted tools")
 p(
