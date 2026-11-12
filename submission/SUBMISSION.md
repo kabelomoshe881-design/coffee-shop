@@ -66,11 +66,14 @@ Also check the **contribution area** column on the cover and in section 1.4 agai
 actually did what. If the split changed, change both and `docs/contributions.md` together so
 they still agree.
 
-### 3.2 Update the contents (one keystroke)
+### 3.2 The contents list (nothing to do)
 
-After you change names, the page numbers can shift by a page. Click anywhere in the contents
-list and press `F9`, then choose **Update entire table**. Word may also do this automatically
-when the file opens — say yes if it asks.
+The contents list is written out with fixed page numbers, not a Word field, so it does
+**not** need updating and there is no `F9` step. Do not run "Update table" or "Update
+fields" on it — in WPS Office that command corrupted an earlier build of this document.
+
+If you add or delete rows and the report grows past 20 pages, rebuild it with the two
+passes in section 7 rather than editing the contents by hand.
 
 ### 3.3 Evidence of collaboration (required by the rubric)
 
@@ -197,7 +200,7 @@ submission/
 ├── BIWA2110-Ground-and-Grain-Source.zip   runnable code and docs
 ├── BIWA2110-Ground-and-Grain-Package.zip  the whole handover
 ├── build_docx.py                          regenerates the report from source
-├── postprocess_docx.py                    fixes the field cache and page total
+├── postprocess_docx.py                    fixes the cached page total in the footer
 ├── make_zips.py                           rebuilds both archives
 ├── capture_db_evidence.mjs                read-only dump of the live Redis
 ├── report.html                            earlier HTML version, kept for reference
@@ -229,13 +232,14 @@ stay in step, then run the two passes:
 
 ```bash
 python submission/build_docx.py            # first pass: measure
-# open in Word, update fields, note the page count and word count
+# open in Word, note the page count and word count, and check the contents page
 python submission/build_docx.py 20 6554    # second pass: real total and word count
-# then in Word: update fields, save, export PDF
-python submission/postprocess_docx.py submission/BIWA2110-Ground-and-Grain-Report.docx 20
+# then in Word: save, and export the PDF
 ```
 
-The last argument of `postprocess_docx.py` is the page total, so it must match the real count.
+The contents page numbers live in `TOC_ENTRIES` at the top of `build_docx.py`. If the
+report's length changes, update that list and the two numbers above, then rebuild.
+Do not "update the table of contents" in Word or WPS — it is plain text on purpose.
 
 ---
 

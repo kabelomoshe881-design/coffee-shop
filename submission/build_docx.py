@@ -10,7 +10,12 @@ import os
 import sys
 from docx import Document
 from docx.shared import Pt, Cm, RGBColor
-from docx.enum.text import WD_ALIGN_PARAGRAPH, WD_BREAK
+from docx.enum.text import (
+    WD_ALIGN_PARAGRAPH,
+    WD_BREAK,
+    WD_TAB_ALIGNMENT,
+    WD_TAB_LEADER,
+)
 from docx.enum.table import WD_TABLE_ALIGNMENT
 from docx.enum.section import WD_SECTION
 from docx.oxml.ns import qn
@@ -190,25 +195,39 @@ def add_numpages_field(paragraph):
     _set_run_font(run, BODY_FONT, 8.5, color=MUTED)
 
 
-def add_toc_field(paragraph):
-    run = paragraph.add_run()
-    f1 = OxmlElement("w:fldChar")
-    f1.set(qn("w:fldCharType"), "begin")
-    it = OxmlElement("w:instrText")
-    it.set(qn("xml:space"), "preserve")
-    it.text = 'TOC \\o "1-1" \\h \\z \\u'
-    f2 = OxmlElement("w:fldChar")
-    f2.set(qn("w:fldCharType"), "separate")
-    t = OxmlElement("w:t")
-    t.text = "Contents will appear here. In Word, right-click and choose Update Field."
-    f3 = OxmlElement("w:fldChar")
-    f3.set(qn("w:fldCharType"), "end")
-    run._r.append(f1)
-    run._r.append(it)
-    run._r.append(f2)
-    run._r.append(t)
-    run._r.append(f3)
-    _set_run_font(run, BODY_FONT, 10, color=MUTED)
+# The contents list is written out as plain paragraphs rather than a TOC field.
+# A field has to be refreshed by the reader, and WPS Office's refresh corrupts
+# this document (it rewrites the first entry and drops the Declaration heading),
+# so the page numbers are fixed here and checked against the exported PDF by
+# verify.py after every build.
+TOC_ENTRIES = [
+    ("Declaration", 2),
+    ("Abstract", 3),
+    ("1. Introduction", 5),
+    ("2. Requirements", 6),
+    ("3. Design", 8),
+    ("4. Implementation", 10),
+    ("5. Testing and quality assurance", 12),
+    ("6. Deployment", 14),
+    ("7. Challenges and lessons", 16),
+    ("8. Conclusion and future work", 17),
+    ("References", 17),
+    ("Appendix A — API reference", 18),
+    ("Appendix B — Records and screenshots", 19),
+]
+
+
+def add_toc_entry(title, page):
+    par = doc.add_paragraph()
+    pf = par.paragraph_format
+    pf.space_before = Pt(0)
+    pf.space_after = Pt(3)
+    pf.line_spacing = 1.0
+    pf.tab_stops.add_tab_stop(Cm(16.6), WD_TAB_ALIGNMENT.RIGHT, WD_TAB_LEADER.DOTS)
+    r1 = par.add_run(title)
+    _set_run_font(r1, BODY_FONT, 10, color=INK)
+    r2 = par.add_run("\t" + str(page))
+    _set_run_font(r2, BODY_FONT, 10, color=INK)
 
 
 # --------------------------------------------------------------------------
@@ -522,11 +541,9 @@ if TOTAL_PAGES:
 else:
     add_numpages_field(fp)
 
-# ask Word to refresh the contents field when the file opens
-settings = doc.settings.element
-update = OxmlElement("w:updateFields")
-update.set(qn("w:val"), "true")
-settings.append(update)
+# No <w:updateFields>: the contents list is plain text, so there is nothing to
+# refresh, and asking Word or WPS to update fields on open is what corrupted the
+# previous build. The only field left is PAGE in the footer, which renders live.
 
 # --------------------------------------------------------------------------
 # COVER
@@ -732,8 +749,8 @@ p(
 # --------------------------------------------------------------------------
 
 h1_plain("Contents")
-toc_par = doc.add_paragraph()
-add_toc_field(toc_par)
+for _title, _page in TOC_ENTRIES:
+    add_toc_entry(_title, _page)
 
 # --------------------------------------------------------------------------
 # 1 INTRODUCTION

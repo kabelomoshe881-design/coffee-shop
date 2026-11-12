@@ -2,7 +2,10 @@
 """
 Post-process the Word-saved report:
   * fix the cached NUMPAGES field result so non-Word viewers show the right total
-  * re-add <w:updateFields> (Word removes it when it saves) so Word refreshes the TOC on open
+
+The contents list is plain text, so this script deliberately does NOT add
+<w:updateFields>: asking the reader to refresh fields is what corrupted an
+earlier build in WPS Office.
 """
 import re
 import shutil
@@ -36,13 +39,9 @@ for info, data in items:
 
     elif name == "word/settings.xml":
         text = data.decode("utf-8")
-        if "updateFields" not in text:
-            tag = '<w:updateFields w:val="true"/>'
-            if "<w:compat>" in text:
-                text = text.replace("<w:compat>", tag + "<w:compat>", 1)
-            else:
-                text = text.replace("</w:settings>", tag + "</w:settings>", 1)
-            changed.append("settings.xml updateFields added")
+        # Never insert <w:updateFields> here. It makes WPS Office rewrite the
+        # contents field on open, which is how the previous build lost its
+        # Declaration heading.
         data = text.encode("utf-8")
 
     out.append((info, data))

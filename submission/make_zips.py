@@ -23,6 +23,14 @@ EXCLUDE_FILES = {".env", ".DS_Store", "Thumbs.db"}
 # local runtime artefacts
 EXCLUDE_RELATIVE = {"server/data/db.json"}
 
+
+def _skip_in_submission(rel):
+    """Keep editor duplicates and stray exports out of the handover archive."""
+    if not rel.startswith("submission/"):
+        return False
+    name = rel.rsplit("/", 1)[-1]
+    return " - Copy" in name or name == "BIWA2110-Ground-and-Grain-Report.pdf"
+
 SOURCE_ZIP = os.path.join(HERE, "BIWA2110-Ground-and-Grain-Source.zip")
 PACKAGE_ZIP = os.path.join(HERE, "BIWA2110-Ground-and-Grain-Package.zip")
 
@@ -46,6 +54,8 @@ def walk(include_submission):
                 continue
             rel = (rel_dir + "/" + name).lstrip("/")
             if rel in EXCLUDE_RELATIVE:
+                continue
+            if _skip_in_submission(rel):
                 continue
             if rel.startswith("submission/") and name.endswith(".zip"):
                 continue
