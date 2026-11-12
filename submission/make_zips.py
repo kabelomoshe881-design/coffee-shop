@@ -40,7 +40,9 @@ def walk(include_submission):
         )
 
         for name in sorted(filenames):
-            if name in EXCLUDE_FILES or name.endswith(EXCLUDE_SUFFIXES):
+            if name in EXCLUDE_FILES or name.endswith(EXCLUDE_SUFFIXES) or ".bak" in name:
+                continue
+            if name.startswith("~$"):
                 continue
             rel = (rel_dir + "/" + name).lstrip("/")
             if rel in EXCLUDE_RELATIVE:

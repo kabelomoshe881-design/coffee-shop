@@ -56,15 +56,15 @@ The report is laid out for **five members**. Each one appears as `[ full name ]`
 
 1. the **cover page** table,
 2. the **Declaration** signature table (five blank signature rows),
-3. **Appendix D**, the ownership map.
+3. **section 1.4**, the ownership map.
 
 Open the DOCX in Word, use Find (`Ctrl+F`) for `[ full name ]`, and replace each one. Then
 do the same for `[ student number ]`. If your group has fewer than five members, delete the
 spare rows from all three tables so the numbers agree; if you have more, add rows.
 
-Also check the **contribution area** column on the cover, in section 1.6 and in Appendix D
-against who actually did what. If the split changed, change all three and
-`docs/contributions.md` together so they still agree.
+Also check the **contribution area** column on the cover and in section 1.4 against who
+actually did what. If the split changed, change both and `docs/contributions.md` together so
+they still agree.
 
 ### 3.2 Update the contents (one keystroke)
 
@@ -87,7 +87,7 @@ gh pr create --fill
 ```
 
 Then a **different** member reviews and merges the pull request. After that, capture the
-evidence and paste it into Appendix D, under "Repository history at the time of writing":
+evidence and keep it in `submission/evidence/git-history.txt`:
 
 ```bash
 git shortlog -sn --all
@@ -133,7 +133,7 @@ Then open the live site once, place an order, log in as staff, and move that ord
 
 ## 4. What the report contains
 
-35 pages, 9,850 words including tables and appendices.
+20 pages, 6,554 words including tables and appendices. 16 tables, 3 figures.
 
 | Part | Content |
 |------|---------|
@@ -141,21 +141,17 @@ Then open the live site once, place an order, log in as staff, and move that ord
 | Declaration | Own-work statement, signature table, note on AI-assisted tools |
 | Abstract | Problem, solution, method, result |
 | Contents | Word field, already populated; `F9` to refresh |
-| 1. Introduction | Background, problem statement, objectives, scope, group roles |
-| 2. Requirements | Personas, 14 functional and 9 non-functional requirements, user stories with acceptance criteria, constraints |
-| 3. Design | Architecture, frontend/backend structure, key-value data model, API design, order lifecycle, security, interface design system |
-| 4. Implementation | Stack choices, server, client, error handling, the dialog focus bug, code quality |
-| 5. Testing | 10 automated tests, 12 browser scenarios, accessibility, responsiveness, performance, security checks, defect log |
-| 6. Deployment | Topology, environment variables, procedure, free-tier constraints, live verification, reading the records back from Redis |
+| 1. Introduction | Background, problem statement, seven objectives, scope, group roles |
+| 2. Requirements | Personas, 14 functional and 9 non-functional requirements, constraints |
+| 3. Design | Architecture, key-value data model, API design, order lifecycle, security, interface design |
+| 4. Implementation | Stack choices, server, client, error handling, the dialog focus case study |
+| 5. Testing | 10 automated tests, 12 browser scenarios, accessibility, responsiveness, performance, defect log |
+| 6. Deployment | Topology, environment variables, procedure, free-tier constraints, live verification, records read back from Redis |
 | 7. Challenges | Seven lessons, including CORS, build-time env vars, key-value thinking, secrets |
 | 8. Conclusion | What was achieved, future work, what we learned |
 | References | 13 sources |
 | Appendix A | API reference with request/response examples |
-| Appendix B | Full key-value schema and index maintenance |
-| Appendix C | Test output and live API evidence |
-| Appendix D | Ownership map and repository history |
-| Appendix E | Screenshot index and five full-page figures, including the database records |
-| Appendix F | Viva preparation: questions and answers per area |
+| Appendix B | Order document as stored, two figures, screenshot index |
 
 ---
 
@@ -165,14 +161,14 @@ Taken from section 10 of the brief.
 
 | Criterion | Marks | Where it is evidenced |
 |-----------|-------|----------------------|
-| React interface and user experience | 15 | Section 3.8 (tokens, type, contrast), 5.4–5.6 (12 browser scenarios, responsive, dark mode); figures 1–3 and 6–9; screenshots 01–12 |
-| Express REST API | 20 | Section 3.5 (endpoint table), 4.2 (routers, Zod schemas, error envelope), 4.4; Appendix A; the 10 automated tests |
+| React interface and user experience | 15 | Section 3.5 (tokens, type, contrast), 5.3 (accessibility, responsive, dark mode); figures 2–3; screenshots 01–12 |
+| Express REST API | 20 | Section 3.3 (endpoint table), 4.2 (routers, Zod schemas, error envelope); Appendix A; the 10 automated tests |
 | Fetch API integration | 10 | Section 4.3 (`client/src/api.js`, one request helper, abort on unmount, typed error envelope); polling on the confirmation page |
-| Key-value NoSQL database and persistence | 15 | Section 3.4 (schema, explicit indexes, `MULTI`), 6.7 (records read back from the live instance); Appendix B; screenshot 13 |
-| Menu and order management functionality | 15 | Section 3.6 (forward-only status workflow), 4.2 (repositories, price snapshotting, `ITEM_IN_USE` guard); staff dashboard screenshots 06–09 |
-| GitHub collaboration and code quality | 10 | `docs/contributions.md`, Appendix D, `git-history.txt`; **one author in the history at present — see 3.3** |
+| Key-value NoSQL database and persistence | 15 | Section 3.2 (schema, explicit indexes, `MULTI`), 6.4 (records read back from the live instance); figure 1; screenshot 13 |
+| Menu and order management functionality | 15 | Section 3.4 (forward-only status workflow), 4.2 (repositories, price snapshotting, `ITEM_IN_USE` guard); staff dashboard screenshots 06–09 |
+| GitHub collaboration and code quality | 10 | `docs/contributions.md`, section 1.4, `git-history.txt`; **one author in the history at present — see 3.3** |
 | Deployment and testing | 10 | Section 5 (tests, scenarios, defects), 6 (three hosts, env vars, live verification); live URLs in section 2 |
-| Students Own Work | 5 | Declaration, section 1.5 (how we worked), the note on AI-assisted tools |
+| Students Own Work | 5 | Declaration (including the note on AI-assisted tools), section 1.4 (how the work was divided) |
 
 ---
 
@@ -183,11 +179,11 @@ Taken from section 10 of the brief.
 | GitHub repository URL | Done | https://github.com/kabelomoshe881-design/coffee-shop |
 | Deployed React frontend URL | Done | https://coffee-shop-omega-lovat.vercel.app |
 | Deployed Express backend URL | Done | https://ground-and-grain-api.onrender.com/api/health |
-| Working app on a persistent NoSQL database | Done | Upstash Redis; `/api/health` reports `"driver":"redis"`; section 6.7 and screenshot 13 |
+| Working app on a persistent NoSQL database | Done | Upstash Redis; `/api/health` reports `"driver":"redis"`; section 6.4 and figure 1 |
 | README covering installation, technologies, API endpoints and deployment | Done | `README.md` — Quick start, Tech stack, API reference, Deployment |
-| Screenshots of the application and database records | Done | Screenshots 01–12 (application) and 13 (database), indexed in Appendix E |
-| Report outlining each member's contribution | Needs names | Section 1.6 and Appendix D, five placeholder rows — see 3.1 |
-| Demonstration of adding a menu item, placing an order and updating its status | Partly | Screenshots 09 (add item), 03–04 (place order), 07 (advance status) show each step, and section 9 is the script. If your lecturer wants a video, record a two-minute screen capture following section 9 |
+| Screenshots of the application and database records | Done | Screenshots 01–12 (application) and 13 (database), indexed in Appendix B |
+| Report outlining each member's contribution | Needs names | Section 1.4, five placeholder rows — see 3.1 |
+| Demonstration of adding a menu item, placing an order and updating its status | Partly | Screenshots 09 (add item), 03–04 (place order), 07 (advance status) show each step, and section 8 of this file is the script. If your lecturer wants a video, record a two-minute screen capture following it |
 
 ---
 
@@ -234,9 +230,9 @@ stay in step, then run the two passes:
 ```bash
 python submission/build_docx.py            # first pass: measure
 # open in Word, update fields, note the page count and word count
-python submission/build_docx.py 35 9850    # second pass: real total and word count
+python submission/build_docx.py 20 6554    # second pass: real total and word count
 # then in Word: update fields, save, export PDF
-python submission/postprocess_docx.py submission/BIWA2110-Ground-and-Grain-Report.docx 35
+python submission/postprocess_docx.py submission/BIWA2110-Ground-and-Grain-Report.docx 20
 ```
 
 The last argument of `postprocess_docx.py` is the page total, so it must match the real count.
@@ -256,7 +252,8 @@ The last argument of `postprocess_docx.py` is the page total, so it must match t
 8. If there is time, show `evidence/database-records.txt` next to the app and point out that
    the order you just placed is in the store with its status.
 
-If someone asks for a hard question, Appendix F has the answers and the file to point at.
+If someone asks for a hard question, sections 3.2 and 6.4 and Appendix A have the answers,
+and each one points at the file to open.
 
 ---
 
